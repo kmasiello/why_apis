@@ -1,0 +1,12 @@
+name: "Why APIs"
+title: "whyAPIs"
+description: |
+  You're probably not using APIs, but you probably should. What are APIs? How do you use them? And how do you get started?
+output_dir: "docs"
+navbar:
+  right:
+    - text: "Home"
+      href: index.html
+    - text: "About"
+      href: about.html
+output: distill::distill_article
