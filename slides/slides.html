@@ -340,7 +340,7 @@ class: inverse
 
 ```
 
-## [1] "heads"
+## [1] "tails"
 
 ```
 
@@ -350,7 +350,7 @@ class: inverse
 
 ```
 
-## [1] "tails"
+## [1] "heads"
 
 ```
 
@@ -376,8 +376,8 @@ class: inverse
 ```
 
 ##    Var1 Freq
-## 1 heads  252
-## 2 tails  248
+## 1 heads  241
+## 2 tails  259
 
 ```
 
@@ -405,13 +405,6 @@ multi_toss &lt;- function(n) {
 ```
 
 
----
-class: inverse, center, middle
-##remove this slide
-
-&lt;h1&gt;&lt;span style='color:tomato'&gt;https://colorado.rstudio.com/rsc/&lt;/span&gt;&lt;span style='color:cornflowerblue'&gt;crop-yield-api/&lt;/span&gt;&lt;span style='color:orange'&gt;crop-yield &lt;/span&gt;&lt;span style='color:darkseagreen'&gt;?.year=1978&amp;.product=cassava&amp;.entity=congo&lt;/span&gt;&lt;/h1&gt;
-
-## &lt;span style="color:tomato"&gt;host/&lt;/span&gt;&lt;span style="color:cornflowerblue"&gt;RSC content path/&lt;/span&gt;&lt;span style="color:orange"&gt;endpoint&lt;/span&gt;&lt;span style="color:darkseagreen"&gt;?parameters&lt;/span&gt;
 ---
 # The API
 
@@ -545,22 +538,72 @@ function(n) {
 ---
 class: inverse, center, middle
 # The Swagger Interface
+
+???
+When you save and run your API locally in the RStudio IDE, the Swagger interface allows you to interact with the API and test it
 ---
 # Swagger
 &lt;img src="slides_files/swagger.png" width="80%" style="display: block; margin: auto;" /&gt;
 ---
-class: inverse, center, middle
-# Calling the API from R {httr}
+# Publish the API 
+Using RStudio Connect (push button deployment, git-backed deployment, or programmatic)
+.center[**&lt;https://colorado.rstudio.com/rsc/coin_api/&gt;**]
+
+&lt;img src="slides_files/published.png" width="80%" style="display: block; margin: auto;" /&gt;
 ---
-# API Call Steps:
+class: inverse, middle, center
 
-* This pattern is the same for all languages
+#What have we done?
+---
+#Query our API from a browser
+Single Coin Toss: 
+&lt;https://colorado.rstudio.com/rsc/coin_api/coin_toss&gt;  &lt;br&gt;&lt;br&gt;
+&lt;img src="slides_files/coin_toss_result.png"  style="vertical-align:middle"&gt;  
+Multi Coin Toss: 
+&lt;https://colorado.rstudio.com/rsc/coin_api/multi_toss?n=40&gt; &lt;br&gt;&lt;br&gt;
+&lt;img src="slides_files/multi_toss_result.png"  style="vertical-align:middle"&gt;  
+---
+# Elements of our API call
 
-* Generate the query URL
+`#* Toss a coin multiple times and summarize output`  
+&lt;span style="color:darkseagreen"&gt;`#* @param n the number of times to toss the coin`&lt;/span&gt;  
+&lt;span style="color:orange"&gt;`#* @get /multi_toss`&lt;/span&gt;  
+```
+function(n) {
+  as.data.frame(
+    table(sample(c("heads", "tails"), n, 
+                 prob = c(0.5, 0.5), replace = TRUE)))
+}
+```
 
-* Make the request 
 
-* Parse the response 
+.center[
+&lt;h2&gt;&lt;span style='color:tomato'&gt;https://colorado.rstudio.com/rsc/&lt;/span&gt; &lt;span style='color:cornflowerblue'&gt;coin_api/&lt;/span&gt;&lt;span style='color:orange'&gt;multi_toss&lt;/span&gt;&lt;span style='color:darkseagreen'&gt;?n=40&lt;/span&gt;&lt;/h2&gt;
+
+## &lt;span style="color:tomato"&gt;host/&lt;/span&gt;&lt;span style="color:cornflowerblue"&gt;RSC content path/&lt;/span&gt;&lt;br&gt;&lt;span style="color:orange"&gt;endpoint&lt;/span&gt;&lt;span style="color:darkseagreen"&gt;?parameters&lt;/span&gt;
+]
+---
+class: inverse, middle, center
+# That's great, now how do I use it?
+---
+class: inverse, middle, center
+# Calling the API from R {httr}
+
+---
+.left-column-impact[
+&lt;h7 style="color:#447099"&gt;&lt;br&gt;&lt;br&gt;API Call Steps&lt;/h7&gt;
+]
+
+.right-column[
+&lt;br&gt;&lt;br&gt;
+* ###Generate the query URL
+
+* ###Make the request 
+
+* ###Parse the response 
+
+* ###(This pattern is the same for all languages)
+]
 ---
 # Creating the URL
 
@@ -573,16 +616,17 @@ class: inverse, center, middle
 
 ```r
 library(httr)
-b_url &lt;- 
- "https://colorado.rstudio.com/rsc/crop-yield-api/crop-yield"
+base_url &lt;- 
+ "https://colorado.rstudio.com/rsc/coin_api/"
 
-params &lt;- list(.year = 1975, 
-               .product = "beans", 
-               .entity = "germany")
+endpoint &lt;- "multi_toss"
 
-* (query_url &lt;- modify_url(url = b_url, query = params)) 
+params &lt;- list(n = 1000)
+
+*query_url &lt;- modify_url(url = paste0(base_url, endpoint), 
+*                              query = params) 
 ```
-`[1] "https://colorado.rstudio.com/rsc/crop-yield-api/crop-yield?.year=1975&amp;.product=beans&amp;.entity=germany"`
+`[1] "https://colorado.rstudio.com/rsc/coin_api/multi_toss?n=1000"`
 ---
 # Send the request
 

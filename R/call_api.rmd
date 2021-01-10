@@ -6,6 +6,7 @@ output: html_document
 ---
 ```{r}
 library(httr)
+library(magrittr)
 ```
 
 See the published API at: <https://colorado.rstudio.com/rsc/coin_api/>
@@ -18,7 +19,15 @@ refresh the browser and see the results
 
 or pull it into code with the `httr` package
 ```{r}
-(result <- GET("https://colorado.rstudio.com/rsc/coin_api/coin_toss") %>% 
+
+base_url <- "https://colorado.rstudio.com/rsc/coin_api/"
+
+endpoint <- "coin_toss"
+
+query_url <- modify_url(url = paste0(base_url, endpoint)) 
+
+
+(response <- GET(query_url) %>% 
    content(as = "text") %>% jsonlite::fromJSON())
 
 ```
@@ -29,6 +38,15 @@ Similarly, use `httr` to call the multi toss endpoint
 
 ```{r}
 
-(response <- GET("https://colorado.rstudio.com/rsc/coin_api/multi_toss?n=35") %>% 
+base_url <- 
+ "https://colorado.rstudio.com/rsc/coin_api/"
+
+endpoint <- "multi_toss"
+
+params <- list(n = 1000)
+
+query_url <- modify_url(url = paste0(base_url, endpoint), query = params)
+
+(response <- GET(query_url) %>% 
    content(as = "text") %>% jsonlite::fromJSON())
 ```

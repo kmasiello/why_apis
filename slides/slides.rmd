@@ -399,21 +399,6 @@ multi_toss <- function(n) {
 
 
 ---
-class: inverse, center, middle
-##remove this slide
-
-```{r, results = "asis", echo = FALSE}
-"https://colorado.rstudio.com/rsc/crop-yield-api/crop-yield ?.year=1978&.product=cassava&.entity=congo" %>%
-  flair("https://colorado.rstudio.com/rsc/", color = "tomato") %>%
-  flair("crop-yield-api/", color = "cornflowerblue") %>%
-  flair("crop-yield ", color = "orange") %>%
-  flair("?.year=1978&.product=cassava&.entity=congo", color = "darkseagreen") %>% 
-  flair_all(before = "<h1>", after = "</h1>") %>%
-  cat()
-```
-
-## <span style="color:tomato">host/</span><span style="color:cornflowerblue">RSC content path/</span><span style="color:orange">endpoint</span><span style="color:darkseagreen">?parameters</span>
----
 # The API
 ```{r, API, eval=FALSE}
 library(plumber)
@@ -542,24 +527,84 @@ function(n) {
 ---
 class: inverse, center, middle
 # The Swagger Interface
+
+???
+When you save and run your API locally in the RStudio IDE, the Swagger interface allows you to interact with the API and test it
 ---
 # Swagger
 ```{r  out.width = "80%", echo=FALSE, eval=TRUE, fig.align='center'}
 knitr::include_graphics("slides_files/swagger.png")
 ```
 ---
-class: inverse, center, middle
-# Calling the API from R {httr}
+# Publish the API 
+Using RStudio Connect (push button deployment, git-backed deployment, or programmatic)
+.center[**<https://colorado.rstudio.com/rsc/coin_api/>**]
+
+```{r  out.width = "80%", echo=FALSE, eval=TRUE, fig.align='center'}
+knitr::include_graphics("slides_files/published.png")
+```
 ---
-# API Call Steps:
+class: inverse, middle, center
 
-* This pattern is the same for all languages
+#What have we done?
+---
+#Query our API from a browser
+Single Coin Toss: 
+<https://colorado.rstudio.com/rsc/coin_api/coin_toss>  <br><br>
+<img src="slides_files/coin_toss_result.png"  style="vertical-align:middle">  
+Multi Coin Toss: 
+<https://colorado.rstudio.com/rsc/coin_api/multi_toss?n=40> <br><br>
+<img src="slides_files/multi_toss_result.png"  style="vertical-align:middle">  
+---
+# Elements of our API call
 
-* Generate the query URL
+`#* Toss a coin multiple times and summarize output`  
+<span style="color:darkseagreen">`#* @param n the number of times to toss the coin`</span>  
+<span style="color:orange">`#* @get /multi_toss`</span>  
+```
+function(n) {
+  as.data.frame(
+    table(sample(c("heads", "tails"), n, 
+                 prob = c(0.5, 0.5), replace = TRUE)))
+}
+```
 
-* Make the request 
 
-* Parse the response 
+.center[
+```{r, results = "asis", echo = FALSE}
+"https://colorado.rstudio.com/rsc/ coin_api/multi_toss?n=40" %>%
+  flair("https://colorado.rstudio.com/rsc/", color = "tomato") %>%
+  flair("coin_api/", color = "cornflowerblue") %>%
+  flair("multi_toss", color = "orange") %>%
+  flair("?n=40", color = "darkseagreen") %>% 
+  flair_all(before = "<h2>", after = "</h2>") %>%
+  cat()
+```
+
+## <span style="color:tomato">host/</span><span style="color:cornflowerblue">RSC content path/</span><br><span style="color:orange">endpoint</span><span style="color:darkseagreen">?parameters</span>
+]
+---
+class: inverse, middle, center
+# That's great, now how do I use it?
+---
+class: inverse, middle, center
+# Calling the API from R {httr}
+
+---
+.left-column-impact[
+<h7 style="color:#447099"><br><br>API Call Steps</h7>
+]
+
+.right-column[
+<br><br>
+* ###Generate the query URL
+
+* ###Make the request 
+
+* ###Parse the response 
+
+* ###(This pattern is the same for all languages)
+]
 ---
 # Creating the URL
 
@@ -571,17 +616,18 @@ class: inverse, center, middle
 
 ```{r, eval=FALSE}
 library(httr)
-b_url <- 
- "https://colorado.rstudio.com/rsc/crop-yield-api/crop-yield"
+base_url <- 
+ "https://colorado.rstudio.com/rsc/coin_api/"
 
-params <- list(.year = 1975, 
-               .product = "beans", 
-               .entity = "germany")
+endpoint <- "multi_toss"
 
-{{ (query_url <- modify_url(url = b_url, query = params)) }}
+params <- list(n = 1000)
+
+{{query_url <- modify_url(url = paste0(base_url, endpoint), }}
+                              {{query = params) }}
 
 ```
-`[1] "https://colorado.rstudio.com/rsc/crop-yield-api/crop-yield?.year=1975&.product=beans&.entity=germany"`
+`[1] "https://colorado.rstudio.com/rsc/coin_api/multi_toss?n=1000"`
 ---
 # Send the request
 
@@ -591,14 +637,14 @@ params <- list(.year = 1975,
 
 <span style="background-color:#fff2cc">`(res <- GET(query_url))`</span>
 
-`## Response` 
-
-`[https://colorado.rstudio.com/rsc/crop-yield-api/crop-yield?.year=1975&.product=beans&.entity=germany]`
-
-`##   Date: 2020-11-08 20:34`  
-`##   Status: 200`  
-`##   Content-Type: application/json`  
-`##   Size: 72 B`
+```
+> GET(query_url) 
+Response [https://colorado.rstudio.com/rsc/coin_api/coin_toss]
+  Date: 2021-01-08 18:56
+  Status: 200
+  Content-Type: application/json
+  Size: 9 B
+```
 ---
 # Parse the request
 
