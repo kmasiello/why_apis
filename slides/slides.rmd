@@ -27,6 +27,7 @@ library(magrittr)
 library(gt)
 library(flair)
 library(emo)
+library(fontawesome)
 ```
 
 ```{r include=FALSE, warning=FALSE}
@@ -51,6 +52,8 @@ class: middle, center
 * "How do we share this code with another system / group?"
 
 * "We are replicating work in every project"
+
+
 
 ---
 class: inverse, center, middle
@@ -196,21 +199,24 @@ class: inverse
 name: Signs you might be ready to create an API
 
 .left-column-impact[
-<h6 style="color:#FFFFFF">  5</h6>
+<h6 style="color:#FFFFFF">  6</h6>
 <h7>signs you might be ready to create an API</h7>
 ]
 
 .right-column[
-<br><br><br>
+<br><br>
 ### Redundant code (copying and pasting/reusing)
 
 ### You have a large app that's hard to manage
+
+### You have common processes / business logic that should be used
 
 ### Other teams want your code
 
 ### Other teams may not know your language
 
 ### You want to integrate different software into one toolchain
+
 ]
 
 ---
@@ -309,7 +315,7 @@ Yeah, it's a coin toss. Let's keep it simple. `r emo::ji("smile")`
 class: inverse
 .left-column-impact[
 <h6 style="color:#FFFFFF">4</h6>
-<h7>steps to making a plumber API</h7>
+<h7 style="color:#d6d6d6">steps to making a plumber API</h7>
 ]
 
 .right-column[
@@ -612,7 +618,7 @@ class: inverse, middle, center
 
 2. Create named list with parameters and values  
 
-3. Use modify_url() to fill in parameters  
+3. Use `modify_url()` to fill in parameters  
 
 ```{r, eval=FALSE}
 library(httr)
@@ -635,7 +641,8 @@ params <- list(n = 1000)
 
   * e.g. `GET()`, `POST()`, `PUT()`
 
-<span style="background-color:#fff2cc">`(res <- GET(query_url))`</span>
+
+<span style="background-color:#fff2cc">`response <- GET(query_url)`</span>
 
 ```
 > GET(query_url) 
@@ -645,22 +652,43 @@ Response [https://colorado.rstudio.com/rsc/coin_api/coin_toss]
   Content-Type: application/json
   Size: 9 B
 ```
+
+`r emo::ji("thinking")`   
 ---
 # Parse the request
 
-```r
+```{r eval=FALSE}
 
-*(resp_raw <- content(res, as = "text"))
+{{(respponse_raw <- content(response, as = "text"))}}
 
+## [1] "[{\"Var1\":\"heads\",\"Freq\":500},{\"Var1\":\"tails\",\"Freq\":500}]" 
 
-"[{\"entity\":\"germany\",\"year\":1975,\"product\":\"beans\",\"crop_yield\":2.8749}]" 
+{{jsonlite::fromJSON(response_raw)}}
 
-*jsonlite::fromJSON(resp_raw)
-
-
-##    entity year product crop_yield
-## 1 germany 1975   beans     2.8749
+##    Var1 Freq
+## 1 heads  515
+## 2 tails  485
 ```
+
+Putting everything together:
+```{r eval=FALSE}
+(response <- GET(query_url) %>% 
+   content(as = "text") %>% jsonlite::fromJSON())
+
+##    Var1 Freq
+## 1 heads  511
+## 2 tails  489
+```
+
+---
+class: inverse, middle, center
+
+# What have we done?
+## `r fa(name = "check-square", fill = "white")` &nbsp; Turned our R code into an API  
+## `r fa(name = "check-square", fill = "white")` &nbsp; Call an API for use in R 
+
+
+# `r emo::ji("tada")`
 ---
 class: inverse, middle, center
 # Recap
@@ -678,10 +706,14 @@ class: inverse, middle, center
 * Reduce communication barriers
  
 * Enable programmatic use of tools
-
 ---
-To wrap up, showbarebones shiny app with all logic built into it vs shiny app that just calls the API
+# Brainstorm: API Ideas
 
+* Query your model or database via Slack integration
+
+* Standardize your data munging and other business logic 
+
+* 
 ---
 class: inverse, middle, center
 # Thank you!

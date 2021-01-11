@@ -1,20 +1,21 @@
 <!DOCTYPE html>
 <html lang="" xml:lang="">
   <head>
-    <title>Taming the Shiny beast</title>
+    <title>APIs: you’re probably not using them and why you probably should</title>
     <meta charset="utf-8" />
-    <meta name="author" content="Katie Masiello, Josiah Parry, Alex Gold" />
-    <script src="slides_files/header-attrs-2.5/header-attrs.js"></script>
+    <meta name="author" content="Katie Masiello" />
+    <script src="slides_files/header-attrs-2.6.3/header-attrs.js"></script>
     <link href="slides_files/remark-css-0.0.1/default.css" rel="stylesheet" />
     <link href="slides_files/remark-css-0.0.1/default-fonts.css" rel="stylesheet" />
-    <link href="slides_files/anchor-sections-1.0/anchor-sections.css" rel="stylesheet" />
-    <script src="slides_files/anchor-sections-1.0/anchor-sections.js"></script>
     <script src="slides_files/clipboard-2.0.6/clipboard.min.js"></script>
     <link href="slides_files/shareon-1.4.1/shareon.min.css" rel="stylesheet" />
     <script src="slides_files/shareon-1.4.1/shareon.min.js"></script>
     <link href="slides_files/xaringanExtra-shareagain-0.2.3/shareagain.css" rel="stylesheet" />
     <script src="slides_files/xaringanExtra-shareagain-0.2.3/shareagain.js"></script>
+    <link href="slides_files/panelset-0.2.3/panelset.css" rel="stylesheet" />
+    <script src="slides_files/panelset-0.2.3/panelset.js"></script>
     <link rel="stylesheet" href="custom2.css" type="text/css" />
+    <link rel="stylesheet" href="cols.css" type="text/css" />
   </head>
   <body>
     <textarea id="source">
@@ -23,110 +24,70 @@ layout: true
 background-image: url(slides_files/RStudio-Logo-Flat.png)
 background-position: 2% 98%
 background-size: 10%
+
 ---
 name: title
 class: inverse, center, middle
-# Taming the Shiny beast
-### Katie Masiello, Josiah Parry, Alex Gold
-
-
----
 
 
 
-class: center, middle  
 
-# Shiny, I love you, but...
+
+# **APIs**: you're probably not using them and why you probably should
+### Presented by: **Katie Masiello**
 
 ---
-class: inverse
-.pull-left[
-# How it started...
-![](slides_files/babybear.png)
-] 
---
-.pull-right[
-# How it's going
-![](slides_files/beast.png)
-]
----
-
-.left-column-impact[
-&lt;h6 &gt; 7&lt;/h6&gt;
-&lt;h7&gt;signs it's time to break up&lt;/h7&gt;
-]
-
-.right-column[
-&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;
-1. It's a monolith
-
-1. Updating is scary / hard
-
-1. The idea of handing it off or inheriting it is terrifying
-
-1. Performance issues
-
-1. Redundant code
-
-1. Other teams want to use your code
-
-1. Other teams or tools don't speak R
-
-]
+class: middle, center
+#Where are you? 
+#Where is your organization?
 
 ---
-# Monolith
-&lt;img src="slides_files/monolith.png" width="60%" style="display: block; margin: auto;" /&gt;
+# Common Pain Points
+* "I've created a Shiny beast!"
 
----
-# Lean it out
-&lt;img src="slides_files/microservices.png" width="90%" style="display: block; margin: auto;" /&gt;
+* "How do we share this code with another system / group?"
 
----
-class: inverse 
-
-.left-column-impact[
-&lt;h6 style="color:#FFFFFF"&gt; 4&lt;/h6&gt;
-&lt;h7&gt;Patterns to break up big apps&lt;/h7&gt;
-]
-
-.right-column[
-&lt;br&gt;
-###1. APIs &amp;nbsp;&lt;img src="slides_files/plumber_small.png" height="90" style="vertical-align:middle"&gt;
-
-###2. Write a  &amp;nbsp; &lt;img src="slides_files/pkgdown.png" height="90" style="vertical-align:middle"&gt;
-
-###3. Use &amp;nbsp; &lt;img src="slides_files/shiny.png" height="90" style="vertical-align:middle"&gt;&amp;nbsp; modules
-
-###4. Write an &amp;nbsp; &lt;img src="slides_files/R6.png" height="90" style="vertical-align:middle"&gt;&amp;nbsp; Class 
-
-]
----
-# The Case for Packages &amp;nbsp; &lt;img src="slides_files/pkgdown.png" height="90" style="vertical-align:middle"&gt;
-.pull-left[
-* One package per project
-
-* Project-level reliability
-  * Unit testing! &lt;img src="slides_files/testthat.png" height="60" style="vertical-align:middle"&gt;
-
-* Team-wide collaboration
-  * Analytics
-  * Plotting
-  * Templates
-  * Data Access
+* "We are replicating work in every project"
 
 
-
-]
-.pull-right[
-![](slides_files/packagestructure.png)
-]
-&lt;br&gt;
-*But what if your analytics need to be shared outside of the R-ecosystem?*
 
 ---
 class: inverse, center, middle
-# “Gather together those things that change for the same reason, and separate those things that change for different reasons.”
+# Changing Data Science Landscape
+
+
+---
+# Data Science in 2021  
+
+* Part of production applications  
+
+* Beyond ad hoc reports, visualizations, and dashboards  
+
+* Need to equip data scientists with production tools  
+
+* Dependence on IT   
+
+* To succeed, we need to embrace DevOps  
+
+* How? Microservices    
+
+
+---
+# Monolithic Mindset
+&lt;img src="slides_files/monolith.png" width="60%" style="display: block; margin: auto;" /&gt;
+
+---
+# Lean it out with Microservices
+&lt;img src="slides_files/microservices.png" width="90%" style="display: block; margin: auto;" /&gt;
+
+---
+class: inverse, middle
+
+
+.left[###The Single Responsibility Principle]
+.center[# “Gather together those things that change for the same reason, and separate those things that change for different reasons.”]
+.right[###&amp;ndash; Robert C. Martin]
+
 ---
 class: inverse, center, middle
 # Okay, but how?
@@ -148,106 +109,117 @@ class: inverse, center, middle
 * Think of HTTP as a universal language
 
 ---
-# Conceptualizing APIs
+# Think of APIs as a way to access functions
+General form of an API: 
+```
+http://hostname/api_endpoint/?parameter=value
+```
 
-* Think of an API like a function  
+Example function:
 
-* Functions have arguments and do something 
+```r
+my_function &lt;- function(argument) {
+  some_kind_of_operation(argument)
+}
+```
 
-* APIs have parameters and do something
+As an API: 
+```
+http://hostname/my_function/?argument=value
 
-* `function(argument = value)`
-
-* `http://hostname:8888/api_endpoint/?parameter=value`
+```
 
 ---
-# Data Science Tool Box
+# Think of APIs as a universal adapter
 
-* PDF reports
+.center[&lt;img src="slides_files/dockingstation.png" height = 325&gt;] 
+  
+.center[&lt;img src="slides_files/dockingstationDescription.png" width = 1000&gt; ]
 
-* PowerPoint presentations
+---
+# The Case for APIs
+
+Traditional Data Science Tool Box
+
+* Reports
+
+* Presentations
 
 * Spreadsheets
 
 * Interactive Dashboards
 
-* *etc.*
-
-* Limited to end user consumption
-
----
-# Data Science Tool Box
-
-* PDF reports
-
-* PowerPoint presentations
-
-* Spreadsheets
-
-* Interactive Dashboards
-
-* *etc.*
-
-* **~APIs~**
+* *all limited to end user consumption*
+  
+Extend your reach with APIs!
 
 ---
-class: inverse, center, middle
+# The Case for APIs
+.pull-left[&lt;h3 style="margin-top: 0; color: #447099;"&gt;
+Organizational &lt;/h3&gt;
 
-# Why an API?
+* Smaller pieces are easier to manage
 
----
-# Organizational
+* Component monitoring 
 
-* Smaller pieces are easier to manage (less code!)
-
-* Component Monitoring 
-
-* Infrastructure for recycled code 
+* Infrastructure for recycled code ♻️
 
 * Less technical debt! 
 
 * Better change management
-  * Upgrade one service at a time without bringing down whole application
 
----
-# Collaborative
+* Upgrade one service at a time without bringing down whole application
 
-* Less friction in tool handoff 
+]
 
-* Empower teams to use preferred tool chain
+.pull-right[&lt;h3 style="margin-top: 0; color: #447099;"&gt;
+Collaborative &lt;/h3&gt;
+
+* Less friction and effort in tool handoff 
+
+* Empower teams to use preferred tool chain 🔥
 
 * Concerned about API requests not software language
 
-* Reduced effort in tool hand off
+* No need to translate work
 
-  * No need to translate work
-  
-  * Not blocked by communication
+* Programmatic use of services
 
-* Programmatic use of services by other teams
+* *Glue together API requests! Pipelines, baby!* &lt;img src="slides_files/pipe.png" height="20" style="vertical-align:middle"&gt;
+]
+---
+class: inverse
+name: Signs you might be ready to create an API
 
-  * Whereas dashboards require user intervention
+.left-column-impact[
+&lt;h6 style="color:#FFFFFF"&gt;  6&lt;/h6&gt;
+&lt;h7&gt;signs you might be ready to create an API&lt;/h7&gt;
+]
 
-* **_Glue together API requests! Pipelines, baby!_** 
+.right-column[
+&lt;br&gt;&lt;br&gt;
+### Redundant code (copying and pasting/reusing)
+
+### You have a large app that's hard to manage
+
+### You have common processes / business logic that should be used
+
+### Other teams want your code
+
+### Other teams may not know your language
+
+### You want to integrate different software into one toolchain
+
+]
 
 ---
-# Signs you might be ready to create an API
 
-* Redundant code (copying and pasting/reusing)
-
-* Other teams want your code
-
-* Other teams may not know your language
-
-* You want to integrate different software into one toolchain
-
----
 class: inverse, center, middle
 
 # How do you build an API?
 
 ---
-# API frameworks?
+# API frameworks
 
 * R - plumber
 
@@ -262,37 +234,15 @@ class: inverse, center, middle
 
 ---
 # Deployment Options
-.pull-left[
 
-* RStudio Connect
 
-* Digital Ocean
+* RStudio Connect &lt;br&gt;
+&lt;img src="slides_files/rsc.png" height="100" style="vertical-align:middle"&gt; 
 
-* Docker
-]
-.pull-right[
-&lt;img src="slides_files/rsc.png" width="90%" style="display: block; margin: auto 0 auto auto;" /&gt;
+* Digital Ocean &lt;br&gt;&lt;img src="slides_files/digitalocean.png" width="100" style="vertical-align:middle"&gt; 
 
-&lt;img src="slides_files/digitalocean.png" width="45%" style="display: block; margin: auto 0 auto auto;" /&gt;&lt;img src="slides_files/docker.png" width="45%" style="display: block; margin: auto 0 auto auto;" /&gt;
-]
----
-class: center, middle
+* Docker &lt;br&gt;&lt;img src="slides_files/docker.png" width="100" style="vertical-align:middle"&gt; 
 
-# Why limit your stack to
-![](slides_files/streamlit_small.png)
-![](slides_files/shiny_small.png) ![](slides_files/plotly_small.png)
-
----
-class: center, middle
-
-# When it could be this
-
-![](slides_files/shiny_small.png)
-![](slides_files/plumber_small.png) &lt;br&gt;
-![](slides_files/plotly_small.png)
-![](slides_files/flask_small.png)
-![](slides_files/streamlit_small.png)
-![](slides_files/nodejs_small.png)
 
 ---
 class: inverse, center, middle
@@ -329,273 +279,336 @@ class: inverse, center, middle
   
 * Other methods:
   * PUT
-  * DELETE (yikes!)
+  * DELETE (yikes!) ☠️
   * HEAD
-  * … 
+  * …  
+
+
 ---
-# APIs as a Maturity Process 
+# Example: Go/No-Go Model
 
-* The one off analysis
+![:col_header &lt;img src="slides_files/info-sec.png" height="100" style="vertical-align:middle";&gt;, 
+&lt;img src="slides_files/statistician.png" height="100" style="vertical-align:middle";&gt;, 
+&lt;img src="slides_files/jr-analyst.png" height="100" style="vertical-align:middle"; &gt;]
+![:col_row Susan has built a tool in R that provides Go/No-Go assertions,
+Andrea needs to incorporate these assertions into her Python code to predict if it will rain, 
+Mateo needs his daily metrics shown in Tableau to reflect these assertions]
 
-* The *what ifs*?
-
-  * Parameterized Rmd
-
-  * Shiny Dashboard
-
-* Need programmatic access  
-
-  * Function
-  
-  * API
-  
----
-# Example: Global Crop Yields
-.pull-left[
-* [TidyTuesday Week 36, 2020](https://github.com/rfordatascience/tidytuesday/blob/master/data/2020/2020-09-01/readme.md) 
-
-* Goal: 
-  * Fetch crop yields for a given crop, year, and country 
-  
-* Ad hoc analysis 
-
-* Parameterized Rmd
-
-* Function 
-
-* Plumber API
-]
-
-.pull-right[
-![](slides_files/harvester.png)
-]
----
-# Example: ad hoc analaysis
+--
 
 ```r
-library(tidyverse)
-
-crop_yields &lt;- read_csv("data/crop_yields.csv")
-
-# We could filter our data set
-filter(crop_yields,
-      year == 2018,        
-      product == "maize",
-      entity == "cuba")
-
-## # A tibble: 1 x 4
-##   entity  year product crop_yield
-##   &lt;chr&gt;  &lt;dbl&gt; &lt;chr&gt;        &lt;dbl&gt;
-## 1 cuba    2018 maize         2.39
+#Go/No-Go script
+sample(c("heads", "tails"), 1, 
+       prob = c(0.5, 0.5), 
+       replace = TRUE)
 ```
+
+```
+## [1] "heads"
+```
+--
+Yeah, it's a coin toss. Let's keep it simple. 😄
+
 ---
-# [Parameterized Rmd](https://colorado.rstudio.com/rsc/connect/#/apps/7597/access/4133)
-&lt;img src="slides_files/parameterized.png" width="100%" style="display: block; margin: auto;" /&gt;
+class: inverse
+.left-column-impact[
+&lt;h6 style="color:#FFFFFF"&gt;4&lt;/h6&gt;
+&lt;h7 style="color:#d6d6d6"&gt;steps to making a plumber API&lt;/h7&gt;
+]
+
+.right-column[
+&lt;br&gt;&lt;br&gt;&lt;br&gt;
+###1. Make it functional
+###2. Add `plumber` decorations
+###3. Save as **`plumber.r`**
+###4. Publish
+]
 ---
-# Making it functional
+# Make it functional
+
+.panelset[
+.panel[.panel-name[Function basics]
 * Functions are code shortcuts!
 
 * Functions are a special kind of object
 
 * Arguments are placeholders
 
-* Whatever is printed last is returned
+* Things that change should be arguments
+
+* Whatever is printed last is returned]
+.panel[.panel-name[Coin Toss Function]
+
+
+
+&lt;code class ='r hljs remark-code'&gt;sample(c("heads", "tails"), 1, &lt;br&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;prob = c(0.5, 0.5), replace = TRUE)&lt;/code&gt;
+
+```
+
+## [1] "heads"
+
+```
+
+
+
+&lt;code class ='r hljs remark-code'&gt;#Function 1: toss once and give me a heads or tails output &lt;br&gt;coin_toss &lt;- &lt;span style='background-color:#ffff7f'&gt;function&lt;/span&gt;() {&lt;br&gt;&amp;nbsp;&amp;nbsp;sample(c("heads", "tails"), 1, &lt;br&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;prob = c(0.5, 0.5), replace = TRUE)&lt;br&gt;}&lt;br&gt;coin_toss()&lt;/code&gt;
+
+```
+
+## [1] "heads"
+
+```
+
+
+]
+.panel[.panel-name[Multi-Toss Function]
+
+
+
+
+&lt;code class ='r hljs remark-code'&gt;sample(c("heads", "tails"), &lt;span style='background-color:#ffff7f'&gt;1&lt;/span&gt;, &lt;br&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;prob = c(0.5, 0.5), replace = TRUE)&lt;/code&gt;
+
+```
+
+## [1] "tails"
+
+```
+
+
+
+&lt;code class ='r hljs remark-code'&gt;#Function 2: toss multiple times and summarize output&lt;br&gt;multi_toss &lt;- function(&lt;span style='background-color:#ffff7f'&gt;n&lt;/span&gt;) {&lt;br&gt;&amp;nbsp;&amp;nbsp;table(sample(c("heads", "tails"), &lt;span style='background-color:#ffff7f'&gt;n&lt;/span&gt;, &lt;br&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;prob = c(0.5, 0.5), replace = TRUE)) %&gt;% &lt;br&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;as.data.frame()&lt;br&gt;}&lt;br&gt;multi_toss(&lt;span style='background-color:#ffff7f'&gt;500&lt;/span&gt;)&lt;/code&gt;
+
+```
+
+##    Var1 Freq
+## 1 heads  253
+## 2 tails  247
+
+```
+
+]
+]
+
+---
+#You’ve basically made an API already
 
 
 ```r
-my_fun &lt;- function(arg) {
- # do something with the argument
- arg
+#Function 1: toss once and give me a heads or tails output 
+coin_toss &lt;- function() {
+  sample(c("heads", "tails"), 1, 
+         prob = c(0.5, 0.5), 
+         replace = TRUE)
 }
 
-my_fun("Hello!")
-```
-
-```
-## [1] "Hello!"
-```
-
-```r
-## [1] "Hello!"
-```
----
-# What is changing?
-
-* Things that change should be arguments  
-
-&lt;code class ='r hljs remark-code'&gt;filter(crop_yields, &lt;br&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;year == &lt;span style='background-color:#ffff7f'&gt;2018&lt;/span&gt;, &lt;br&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;product == &lt;span style='background-color:#ffff7f'&gt;"maize"&lt;/span&gt;, &lt;br&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;entity == &lt;span style='background-color:#ffff7f'&gt;"cuba"&lt;/span&gt;)&lt;/code&gt;
-
-* Making the skeleton  
-
-&lt;code class ='r hljs remark-code'&gt;filter_yields &lt;- function(&lt;span style='background-color:#ffff7f'&gt;.year&lt;/span&gt;, &lt;span style='background-color:#ffff7f'&gt;.product&lt;/span&gt;, &lt;span style='background-color:#ffff7f'&gt;.entity&lt;/span&gt;) {&lt;br&gt;	&amp;nbsp;# This is where our filtering will go! &lt;br&gt;}&lt;/code&gt;
-
-* Using a '.' to avoid confusion in the `filter()`
----
-# Example: making it functional
-
-```r
-filter_yields &lt;- function(.year, .product, .entity) {
-
- filter(crop_yields,
-      year == .year,
-      product == .product,
-      entity == .entity)
+#Function 2: toss multiple times and summarize output
+multi_toss &lt;- function(n) {
+  table(sample(c("heads", "tails"), n, 
+               prob = c(0.5, 0.5), 
+               replace = TRUE)) %&gt;% as.data.frame()
 }
-
-filter_yields(2012, "potatoes", "guatemala")
-
-## # A tibble: 1 x 4
-##   entity     year product  crop_yield
-##   &lt;chr&gt;     &lt;dbl&gt; &lt;chr&gt;         &lt;dbl&gt;
-## 1 guatemala  2012 potatoes       25.0
 ```
 
----
-class: inverse, center, middle
-# You’ve basically made an API already
 
----
-class: inverse, center, middle
-
-
-
-&lt;h1&gt;&lt;span style='color:tomato'&gt;https://colorado.rstudio.com/rsc/&lt;/span&gt;&lt;span style='color:cornflowerblue'&gt;crop-yield-api/&lt;/span&gt;&lt;span style='color:orange'&gt;crop-yield &lt;/span&gt;&lt;span style='color:darkseagreen'&gt;?.year=1978&amp;.product=cassava&amp;.entity=congo&lt;/span&gt;&lt;/h1&gt;
-
-## &lt;span style="color:tomato"&gt;host/&lt;/span&gt;&lt;span style="color:cornflowerblue"&gt;RSC content path/&lt;/span&gt;&lt;span style="color:orange"&gt;endpoint&lt;/span&gt;&lt;span style="color:darkseagreen"&gt;?parameters&lt;/span&gt;
 ---
 # The API
 
 ```r
 library(plumber)
-library(tidyverse)
 
-crop_yields &lt;- read_csv("data/crop_yields.csv")
+#* @apiTitle Coin Toss API
 
-#* @apiTitle Crop Yields API
-#* Return crop yields for a given product, year, and entity.
-#* @param .year The year of interest (1961 - 2018)
-#* @param .product The crop of interest. One of wheat, rice, maize, soybeans, potatoes, beans, peas, cassava, barley, cocoa beans, or bananas.
-#* @param .entity The country of interest.
-#* @get /crop-yield
+#* Toss a coin once and give the result
+#* @get /coin_toss
 
-function(.year, .product, .entity) {
- filter(crop_yields,
-        year == .year,
-        product == .product,
-        entity == .entity)
+function() {
+  sample(c("heads", "tails"), 1, 
+         prob = c(0.5, 0.5), replace = TRUE)
+}
+
+#* Toss a coin multiple times and summarize output
+#* @param n the number of times to toss the coin
+#* @get /multi_toss
+
+function(n) {
+  as.data.frame(
+    table(sample(c("heads", "tails"), n, 
+                 prob = c(0.5, 0.5), replace = TRUE)))
 }
 ```
 ---
-# The API
+# The API - plumber code decoration `#*`
+
 ```r
 library(plumber)
-library(tidyverse)
 
-crop_yields &lt;- read_csv("data/crop_yields.csv") 
+*#* @apiTitle Coin Toss API
 
-*#* @apiTitle Crop Yields API 
-#* Return crop yields for a given product, year, and entity.
-#* @param .year The year of interest (1961 - 2018)
-#* @param .product The crop of interest. One of wheat, rice, maize, soybeans, potatoes, beans, peas, cassava, barley, cocoa beans, or bananas.
-#* @param .entity The country of interest.
-#* @get /crop-yield
+#* Toss a coin once and give the result
+#* @get /coin_toss
 
-function(.year, .product, .entity) {
- filter(crop_yields,
-        year == .year,
-        product == .product,
-        entity == .entity)
+function() {
+  sample(c("heads", "tails"), 1, 
+         prob = c(0.5, 0.5), replace = TRUE)
 }
 
+#* Toss a coin multiple times and summarize output
+#* @param n the number of times to toss the coin
+#* @get /multi_toss
+
+function(n) {
+  as.data.frame(
+    table(sample(c("heads", "tails"), n, 
+                 prob = c(0.5, 0.5), replace = TRUE)))
+}
 ```
 ---
-# The API
+# The API - plumber code decoration `#*`
+
 ```r
 library(plumber)
-library(tidyverse)
 
-crop_yields &lt;- read_csv("data/crop_yields.csv") 
+#* @apiTitle Coin Toss API
 
-#* @apiTitle Crop Yields API 
-*#* Return crop yields for a given product, year, and entity.
-#* @param .year The year of interest (1961 - 2018)
-#* @param .product The crop of interest. One of wheat, rice, maize, soybeans, potatoes, beans, peas, cassava, barley, cocoa beans, or bananas.
-#* @param .entity The country of interest.
-#* @get /crop-yield
+*#* Toss a coin once and give the result
+#* @get /coin_toss
 
-function(.year, .product, .entity) {
- filter(crop_yields,
-        year == .year,
-        product == .product,
-        entity == .entity)
+function() {
+  sample(c("heads", "tails"), 1, 
+         prob = c(0.5, 0.5), replace = TRUE)
 }
 
+*#* Toss a coin multiple times and summarize output
+#* @param n the number of times to toss the coin
+#* @get /multi_toss
+
+function(n) {
+  as.data.frame(
+    table(sample(c("heads", "tails"), n, 
+                 prob = c(0.5, 0.5), replace = TRUE)))
+}
 ```
 ---
-# The API
+## The API - plumber code decoration `#*`
+
 ```r
 library(plumber)
-library(tidyverse)
 
-crop_yields &lt;- read_csv("data/crop_yields.csv") 
+#* @apiTitle Coin Toss API
 
-#* @apiTitle Crop Yields API 
-#* Return crop yields for a given product, year, and entity.
-*#* @param .year The year of interest (1961 - 2018)
-*#* @param .product The crop of interest. One of wheat, rice, maize, soybeans, potatoes, beans, peas, cassava, barley, cocoa beans, or bananas.
-*#* @param .entity The country of interest.
-#* @get /crop-yield
+#* Toss a coin once and give the result
+#* @get /coin_toss
 
-function(.year, .product, .entity) {
- filter(crop_yields,
-        year == .year,
-        product == .product,
-        entity == .entity)
+function() {
+  sample(c("heads", "tails"), 1, 
+         prob = c(0.5, 0.5), replace = TRUE)
 }
 
+#* Toss a coin multiple times and summarize output
+*#* @param n the number of times to toss the coin
+#* @get /multi_toss
+
+function(n) {
+  as.data.frame(
+    table(sample(c("heads", "tails"), n, 
+                 prob = c(0.5, 0.5), replace = TRUE)))
+}
 ```
 ---
-# The API
+# The API - plumber code decoration `#*`
+
 ```r
 library(plumber)
-library(tidyverse)
 
-crop_yields &lt;- read_csv("data/crop_yields.csv") 
+#* @apiTitle Coin Toss API
 
-#* @apiTitle Crop Yields API 
-#* Return crop yields for a given product, year, and entity.
-#* @param .year The year of interest (1961 - 2018)
-#* @param .product The crop of interest. One of wheat, rice, maize, soybeans, potatoes, beans, peas, cassava, barley, cocoa beans, or bananas.
-#* @param .entity The country of interest.
-*#* @get /crop-yield
+#* Toss a coin once and give the result
+*#* @get /coin_toss
 
-function(.year, .product, .entity) {
- filter(crop_yields,
-        year == .year,
-        product == .product,
-        entity == .entity)
+function() {
+  sample(c("heads", "tails"), 1, 
+         prob = c(0.5, 0.5), replace = TRUE)
 }
 
+#* Toss a coin multiple times and summarize output
+#* @param n the number of times to toss the coin
+*#* @get /multi_toss
+
+function(n) {
+  as.data.frame(
+    table(sample(c("heads", "tails"), n, 
+                 prob = c(0.5, 0.5), replace = TRUE)))
+}
 ```
 ---
 class: inverse, center, middle
 # The Swagger Interface
+
+???
+When you save and run your API locally in the RStudio IDE, the Swagger interface allows you to interact with the API and test it
 ---
 # Swagger
-&lt;img src="slides_files/swagger.png" width="100%" style="display: block; margin: auto;" /&gt;
+&lt;img src="slides_files/swagger.png" width="80%" style="display: block; margin: auto;" /&gt;
 ---
-class: inverse, center, middle
+# Publish the API 
+Using RStudio Connect (push button deployment, git-backed deployment, or programmatic)
+.center[**&lt;https://colorado.rstudio.com/rsc/coin_api/&gt;**]
+
+&lt;img src="slides_files/published.png" width="80%" style="display: block; margin: auto;" /&gt;
+---
+class: inverse, middle, center
+
+#What have we done?
+---
+#Query our API from a browser
+Single Coin Toss: 
+&lt;https://colorado.rstudio.com/rsc/coin_api/coin_toss&gt;  &lt;br&gt;&lt;br&gt;
+&lt;img src="slides_files/coin_toss_result.png"  style="vertical-align:middle"&gt;  
+Multi Coin Toss: 
+&lt;https://colorado.rstudio.com/rsc/coin_api/multi_toss?n=40&gt; &lt;br&gt;&lt;br&gt;
+&lt;img src="slides_files/multi_toss_result.png"  style="vertical-align:middle"&gt;  
+---
+# Elements of our API call
+
+`#* Toss a coin multiple times and summarize output`  
+&lt;span style="color:darkseagreen"&gt;`#* @param n the number of times to toss the coin`&lt;/span&gt;  
+&lt;span style="color:orange"&gt;`#* @get /multi_toss`&lt;/span&gt;  
+```
+function(n) {
+  as.data.frame(
+    table(sample(c("heads", "tails"), n, 
+                 prob = c(0.5, 0.5), replace = TRUE)))
+}
+```
+
+
+.center[
+&lt;h2&gt;&lt;span style='color:tomato'&gt;https://colorado.rstudio.com/rsc/&lt;/span&gt; &lt;span style='color:cornflowerblue'&gt;coin_api/&lt;/span&gt;&lt;span style='color:orange'&gt;multi_toss&lt;/span&gt;&lt;span style='color:darkseagreen'&gt;?n=40&lt;/span&gt;&lt;/h2&gt;
+
+## &lt;span style="color:tomato"&gt;host/&lt;/span&gt;&lt;span style="color:cornflowerblue"&gt;RSC content path/&lt;/span&gt;&lt;br&gt;&lt;span style="color:orange"&gt;endpoint&lt;/span&gt;&lt;span style="color:darkseagreen"&gt;?parameters&lt;/span&gt;
+]
+---
+class: inverse, middle, center
+# That's great, now how do I use it?
+---
+class: inverse, middle, center
 # Calling the API from R {httr}
+
 ---
-# API Call Steps:
+.left-column-impact[
+&lt;h7 style="color:#447099"&gt;&lt;br&gt;&lt;br&gt;API Call Steps&lt;/h7&gt;
+]
 
-* This pattern is the same for all languages
+.right-column[
+&lt;br&gt;&lt;br&gt;
+* ###Generate the query URL
 
-* Generate the query URL
+* ###Make the request 
 
-* Make the request 
+* ###Parse the response 
 
-* Parse the response 
+* ###(This pattern is the same for all languages)
+]
 ---
 # Creating the URL
 
@@ -603,21 +616,22 @@ class: inverse, center, middle
 
 2. Create named list with parameters and values  
 
-3. Use modify_url() to fill in parameters  
+3. Use `modify_url()` to fill in parameters  
 
 
 ```r
 library(httr)
-b_url &lt;- 
- "https://colorado.rstudio.com/rsc/crop-yield-api/crop-yield"
+base_url &lt;- 
+ "https://colorado.rstudio.com/rsc/coin_api/"
 
-params &lt;- list(.year = 1975, 
-               .product = "beans", 
-               .entity = "germany")
+endpoint &lt;- "multi_toss"
 
-* (query_url &lt;- modify_url(url = b_url, query = params)) 
+params &lt;- list(n = 1000)
+
+*query_url &lt;- modify_url(url = paste0(base_url, endpoint), 
+*                              query = params) 
 ```
-`[1] "https://colorado.rstudio.com/rsc/crop-yield-api/crop-yield?.year=1975&amp;.product=beans&amp;.entity=germany"`
+`[1] "https://colorado.rstudio.com/rsc/coin_api/multi_toss?n=1000"`
 ---
 # Send the request
 
@@ -625,32 +639,55 @@ params &lt;- list(.year = 1975,
 
   * e.g. `GET()`, `POST()`, `PUT()`
 
-&lt;span style="background-color:#fff2cc"&gt;`(res &lt;- GET(query_url))`&lt;/span&gt;
 
-`## Response` 
+&lt;span style="background-color:#fff2cc"&gt;`response &lt;- GET(query_url)`&lt;/span&gt;
 
-`[https://colorado.rstudio.com/rsc/crop-yield-api/crop-yield?.year=1975&amp;.product=beans&amp;.entity=germany]`
+```
+&gt; GET(query_url) 
+Response [https://colorado.rstudio.com/rsc/coin_api/coin_toss]
+  Date: 2021-01-08 18:56
+  Status: 200
+  Content-Type: application/json
+  Size: 9 B
+```
 
-`##   Date: 2020-11-08 20:34`  
-`##   Status: 200`  
-`##   Content-Type: application/json`  
-`##   Size: 72 B`
+🤔   
 ---
 # Parse the request
 
+
 ```r
+*(respponse_raw &lt;- content(response, as = "text"))
 
-*(resp_raw &lt;- content(res, as = "text"))
+## [1] "[{\"Var1\":\"heads\",\"Freq\":500},{\"Var1\":\"tails\",\"Freq\":500}]" 
 
+*jsonlite::fromJSON(response_raw)
 
-"[{\"entity\":\"germany\",\"year\":1975,\"product\":\"beans\",\"crop_yield\":2.8749}]" 
-
-*jsonlite::fromJSON(resp_raw)
-
-
-##    entity year product crop_yield
-## 1 germany 1975   beans     2.8749
+##    Var1 Freq
+## 1 heads  515
+## 2 tails  485
 ```
+
+Putting everything together:
+
+```r
+(response &lt;- GET(query_url) %&gt;% 
+   content(as = "text") %&gt;% jsonlite::fromJSON())
+
+##    Var1 Freq
+## 1 heads  511
+## 2 tails  489
+```
+
+---
+class: inverse, middle, center
+
+# What have we done?
+## &lt;svg style="height:0.8em;top:.04em;position:relative;fill:white;" viewBox="0 0 448 512"&gt;&lt;path d="M400 480H48c-26.51 0-48-21.49-48-48V80c0-26.51 21.49-48 48-48h352c26.51 0 48 21.49 48 48v352c0 26.51-21.49 48-48 48zm-204.686-98.059l184-184c6.248-6.248 6.248-16.379 0-22.627l-22.627-22.627c-6.248-6.248-16.379-6.249-22.628 0L184 302.745l-70.059-70.059c-6.248-6.248-16.379-6.248-22.628 0l-22.627 22.627c-6.248 6.248-6.248 16.379 0 22.627l104 104c6.249 6.25 16.379 6.25 22.628.001z"/&gt;&lt;/svg&gt; &amp;nbsp; Turned our R code into an API  
+## &lt;svg style="height:0.8em;top:.04em;position:relative;fill:white;" viewBox="0 0 448 512"&gt;&lt;path d="M400 480H48c-26.51 0-48-21.49-48-48V80c0-26.51 21.49-48 48-48h352c26.51 0 48 21.49 48 48v352c0 26.51-21.49 48-48 48zm-204.686-98.059l184-184c6.248-6.248 6.248-16.379 0-22.627l-22.627-22.627c-6.248-6.248-16.379-6.249-22.628 0L184 302.745l-70.059-70.059c-6.248-6.248-16.379-6.248-22.628 0l-22.627 22.627c-6.248 6.248-6.248 16.379 0 22.627l104 104c6.249 6.25 16.379 6.25 22.628.001z"/&gt;&lt;/svg&gt; &amp;nbsp; Call an API for use in R 
+
+
+# 🎉
 ---
 class: inverse, middle, center
 # Recap
@@ -668,16 +705,92 @@ class: inverse, middle, center
 * Reduce communication barriers
  
 * Enable programmatic use of tools
+---
+# Brainstorm: API Ideas
 
+* Query your model or database via Slack integration
+
+* Standardize your data munging and other business logic 
+
+* 
 ---
 class: inverse, middle, center
 # Thank you!
 ---
 class: inverse, middle, center
 # Let's talk about it.
+
+---
+
+class: center, middle  
+
+# Shiny, I love you, but...
+
+---
+name: how it's going
+class: inverse
+.pull-left[
+# How it started...
+![](slides_files/babybear.png)
+] 
+--
+.pull-right[
+# How it's going
+![](slides_files/beast.png)
+]
+
+???
+Often we start with a Shiny app that is a great fit for a problem.  But over time, often the app evolves. It can grow in complexity, or be tested to its limits as it becomes business critical. The care and feeding of the app can become burdensome.
+---
+name: signs it's time to break up
+.left-column-impact[
+&lt;h6 &gt; 7&lt;/h6&gt;
+&lt;h7&gt;signs it's time to break up&lt;/h7&gt;
+]
+
+.right-column[
+&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;
+1. It's a monolith
+
+1. Updating is scary / hard
+
+1. The idea of handing it off or inheriting it is terrifying
+
+1. Performance issues
+
+1. Redundant code
+
+1. Other teams want to use your code
+
+1. Other teams or tools don't speak R
+
+]
+
+---
+name: patterns to break up
+class: inverse 
+
+.left-column-impact[
+&lt;h6 style="color:#FFFFFF"&gt; 4&lt;/h6&gt;
+&lt;h7&gt;Patterns to break up big apps&lt;/h7&gt;
+]
+
+.right-column[
+&lt;br&gt;
+###1. Smart data refresh (e.g. &amp;nbsp;&lt;img src="slides_files/pins.png" height="90" style="vertical-align:middle"&gt;)
+
+###2. Write a  &amp;nbsp; &lt;img src="slides_files/pkg.png" height="90" style="vertical-align:middle"&gt;
+
+###3. APIs &amp;nbsp;&lt;img src="slides_files/plumber_small.png" height="90" style="vertical-align:middle"&gt;
+
+###4. Use &amp;nbsp; &lt;img src="slides_files/shiny.png" height="90" style="vertical-align:middle"&gt;&amp;nbsp; modules
+
+]
+---
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script src="cols_macro.js"></script>
 <script>var slideshow = remark.create({
 "highlightStyle": "github",
 "highlightLines": true

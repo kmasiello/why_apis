@@ -9,8 +9,8 @@ remark.macros.col_header = function (...titles) {
   var code =
 '<center>'+
 '<div class="multicolrow"' +
-    'style="font-weight:bold; text-align:center; vertical-align: middle; display: flex;">';
-
+    'style="text-align:center; vertical-align: middle; display: flex;">';
+// KAM removed font-weight:bold; from style for header 
   for(let i = 0; i < num_items; i++)
   code = 
     code +  

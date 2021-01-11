@@ -49,6 +49,8 @@ class: middle, center
 
 * "We are replicating work in every project"
 
+
+
 ---
 class: inverse, center, middle
 # Changing Data Science Landscape
@@ -190,21 +192,24 @@ class: inverse
 name: Signs you might be ready to create an API
 
 .left-column-impact[
-&lt;h6 style="color:#FFFFFF"&gt;  5&lt;/h6&gt;
+&lt;h6 style="color:#FFFFFF"&gt;  6&lt;/h6&gt;
 &lt;h7&gt;signs you might be ready to create an API&lt;/h7&gt;
 ]
 
 .right-column[
-&lt;br&gt;&lt;br&gt;&lt;br&gt;
+&lt;br&gt;&lt;br&gt;
 ### Redundant code (copying and pasting/reusing)
 
 ### You have a large app that's hard to manage
+
+### You have common processes / business logic that should be used
 
 ### Other teams want your code
 
 ### Other teams may not know your language
 
 ### You want to integrate different software into one toolchain
+
 ]
 
 ---
@@ -308,7 +313,7 @@ Yeah, it's a coin toss. Let's keep it simple. 😄
 class: inverse
 .left-column-impact[
 &lt;h6 style="color:#FFFFFF"&gt;4&lt;/h6&gt;
-&lt;h7&gt;steps to making a plumber API&lt;/h7&gt;
+&lt;h7 style="color:#d6d6d6"&gt;steps to making a plumber API&lt;/h7&gt;
 ]
 
 .right-column[
@@ -340,7 +345,7 @@ class: inverse
 
 ```
 
-## [1] "tails"
+## [1] "heads"
 
 ```
 
@@ -365,7 +370,7 @@ class: inverse
 
 ```
 
-## [1] "heads"
+## [1] "tails"
 
 ```
 
@@ -376,8 +381,8 @@ class: inverse
 ```
 
 ##    Var1 Freq
-## 1 heads  241
-## 2 tails  259
+## 1 heads  253
+## 2 tails  247
 
 ```
 
@@ -611,7 +616,7 @@ class: inverse, middle, center
 
 2. Create named list with parameters and values  
 
-3. Use modify_url() to fill in parameters  
+3. Use `modify_url()` to fill in parameters  
 
 
 ```r
@@ -634,32 +639,55 @@ params &lt;- list(n = 1000)
 
   * e.g. `GET()`, `POST()`, `PUT()`
 
-&lt;span style="background-color:#fff2cc"&gt;`(res &lt;- GET(query_url))`&lt;/span&gt;
 
-`## Response` 
+&lt;span style="background-color:#fff2cc"&gt;`response &lt;- GET(query_url)`&lt;/span&gt;
 
-`[https://colorado.rstudio.com/rsc/crop-yield-api/crop-yield?.year=1975&amp;.product=beans&amp;.entity=germany]`
+```
+&gt; GET(query_url) 
+Response [https://colorado.rstudio.com/rsc/coin_api/coin_toss]
+  Date: 2021-01-08 18:56
+  Status: 200
+  Content-Type: application/json
+  Size: 9 B
+```
 
-`##   Date: 2020-11-08 20:34`  
-`##   Status: 200`  
-`##   Content-Type: application/json`  
-`##   Size: 72 B`
+🤔   
 ---
 # Parse the request
 
+
 ```r
+*(respponse_raw &lt;- content(response, as = "text"))
 
-*(resp_raw &lt;- content(res, as = "text"))
+## [1] "[{\"Var1\":\"heads\",\"Freq\":500},{\"Var1\":\"tails\",\"Freq\":500}]" 
 
+*jsonlite::fromJSON(response_raw)
 
-"[{\"entity\":\"germany\",\"year\":1975,\"product\":\"beans\",\"crop_yield\":2.8749}]" 
-
-*jsonlite::fromJSON(resp_raw)
-
-
-##    entity year product crop_yield
-## 1 germany 1975   beans     2.8749
+##    Var1 Freq
+## 1 heads  515
+## 2 tails  485
 ```
+
+Putting everything together:
+
+```r
+(response &lt;- GET(query_url) %&gt;% 
+   content(as = "text") %&gt;% jsonlite::fromJSON())
+
+##    Var1 Freq
+## 1 heads  511
+## 2 tails  489
+```
+
+---
+class: inverse, middle, center
+
+# What have we done?
+## &lt;svg style="height:0.8em;top:.04em;position:relative;fill:white;" viewBox="0 0 448 512"&gt;&lt;path d="M400 480H48c-26.51 0-48-21.49-48-48V80c0-26.51 21.49-48 48-48h352c26.51 0 48 21.49 48 48v352c0 26.51-21.49 48-48 48zm-204.686-98.059l184-184c6.248-6.248 6.248-16.379 0-22.627l-22.627-22.627c-6.248-6.248-16.379-6.249-22.628 0L184 302.745l-70.059-70.059c-6.248-6.248-16.379-6.248-22.628 0l-22.627 22.627c-6.248 6.248-6.248 16.379 0 22.627l104 104c6.249 6.25 16.379 6.25 22.628.001z"/&gt;&lt;/svg&gt; &amp;nbsp; Turned our R code into an API  
+## &lt;svg style="height:0.8em;top:.04em;position:relative;fill:white;" viewBox="0 0 448 512"&gt;&lt;path d="M400 480H48c-26.51 0-48-21.49-48-48V80c0-26.51 21.49-48 48-48h352c26.51 0 48 21.49 48 48v352c0 26.51-21.49 48-48 48zm-204.686-98.059l184-184c6.248-6.248 6.248-16.379 0-22.627l-22.627-22.627c-6.248-6.248-16.379-6.249-22.628 0L184 302.745l-70.059-70.059c-6.248-6.248-16.379-6.248-22.628 0l-22.627 22.627c-6.248 6.248-6.248 16.379 0 22.627l104 104c6.249 6.25 16.379 6.25 22.628.001z"/&gt;&lt;/svg&gt; &amp;nbsp; Call an API for use in R 
+
+
+# 🎉
 ---
 class: inverse, middle, center
 # Recap
@@ -677,10 +705,14 @@ class: inverse, middle, center
 * Reduce communication barriers
  
 * Enable programmatic use of tools
-
 ---
-To wrap up, showbarebones shiny app with all logic built into it vs shiny app that just calls the API
+# Brainstorm: API Ideas
 
+* Query your model or database via Slack integration
+
+* Standardize your data munging and other business logic 
+
+* 
 ---
 class: inverse, middle, center
 # Thank you!

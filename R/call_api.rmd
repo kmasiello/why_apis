@@ -3,6 +3,8 @@ title: "call_api"
 author: "Katie Masiello"
 date: "1/2/2021"
 output: html_document
+editor_options: 
+  chunk_output_type: console
 ---
 ```{r}
 library(httr)

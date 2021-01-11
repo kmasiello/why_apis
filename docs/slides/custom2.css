@@ -1,3 +1,8 @@
+@import url(https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz);
+@import url(https://fonts.googleapis.com/css2?family=PT+Serif&display=swap);
+
+body { font-family: 'PT Serif', 'Droid Serif', 'Palatino Linotype', 'Book Antiqua', 'Palatino', 'Microsoft YaHei', 'Songti SC', serif; }
+
 a, a > code {
   color: rgb(87, 130, 178);
   text-decoration: none;
@@ -45,4 +50,14 @@ h7 {
   float: left;
   vertical-align: middle;
   transform: translateY(25%);
+}
+
+.left-bias-column {
+  width: 65%;
+  float: left;
+}
+
+.right-unbias-column {
+  width: 35%;
+  float: right;
 }

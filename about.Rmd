@@ -8,3 +8,4 @@ description: |
 knitr::opts_chunk$set(echo = FALSE)
 ```
 
+Site built using the `distill` package for R.  Slides built with R Markdown and the `xaringan` package. 
