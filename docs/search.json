@@ -6,7 +6,7 @@
       "description": "Some additional details about the website",
       "author": [],
       "contents": "\nSite built using the distill package for R. Slides built with R Markdown and the xaringan package.\n\n\n\n",
-      "last_modified": "2021-01-11T22:18:45-08:00"
+      "last_modified": "2021-01-11T22:29:48-08:00"
     },
     {
       "path": "index.html",
@@ -14,7 +14,7 @@
       "description": "You're probably not using APIs, but you probably should. What are APIs? How do you use them? And how do you get started?\n",
       "author": [],
       "contents": "\n\n\n\nfitvids('.shareagain', {players: 'iframe'});\n\nAdditional Resources:\nSee the plumber package website: https://www.rplumber.io/. You’ll find installation instructions along with related projects and contextual information\nWatch our webinar covering the latest in the Plumber package: https://rstudio.com/resources/webinars/expanding-r-horizons-integrating-r-with-plumber-apis/\nAt our annual conference rstudio::conf 2020, Alex Gold (Solutions Engineer at RStudio) presented some additional ways to bring your R work into production using Plumber: https://rstudio.com/resources/rstudioconf-2020/deploying-end-to-end-data-science-with-shiny-plumber-and-pins/\nAnother excellent conference talk is James Blair’s rstudio::conf 2019 talk “Democratizing R with Plumber APIS” where he takes an existing Shiny application that uses an R model and turns the model into an API so it can be used by other applications: https://rstudio.com/resources/rstudioconf-2019/democratizing-r-with-plumber-apis/\nIf you’re interested in how Plumber specifically works with RStudio Connect you can find documentation here: https://docs.rstudio.com/how-to-guides/rsc/publish-plumberapi/\n\n\n\n",
-      "last_modified": "2021-01-11T22:18:45-08:00"
+      "last_modified": "2021-01-11T22:29:49-08:00"
     }
   ],
   "collections": []
