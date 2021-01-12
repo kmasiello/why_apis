@@ -38,7 +38,7 @@ class: inverse, center, middle
 
 ---
 class: middle, center
-#Where are you? 
+#Where are you in your data science journey? 
 #Where is your organization?
 
 ---
@@ -291,7 +291,7 @@ class: inverse, center, middle
 &lt;img src="slides_files/statistician.png" height="100" style="vertical-align:middle";&gt;, 
 &lt;img src="slides_files/jr-analyst.png" height="100" style="vertical-align:middle"; &gt;]
 ![:col_row Susan has built a tool in R that provides Go/No-Go assertions,
-Andrea needs to incorporate these assertions into her Python code to predict if it will rain, 
+Andrea needs to incorporate these assertions into her Python code to inform her model, 
 Mateo needs his daily metrics shown in Tableau to reflect these assertions]
 
 --
@@ -313,15 +313,16 @@ Yeah, it's a coin toss. Let's keep it simple. 😄
 class: inverse
 .left-column-impact[
 &lt;h6 style="color:#FFFFFF"&gt;4&lt;/h6&gt;
-&lt;h7 style="color:#d6d6d6"&gt;steps to making a plumber API&lt;/h7&gt;
+&lt;h7&gt;steps to making a plumber API&lt;/h7&gt;
 ]
 
 .right-column[
-&lt;br&gt;&lt;br&gt;&lt;br&gt;
-###1. Make it functional
+&lt;br&gt;&lt;img src="slides_files/plumber.png"  style="vertical-align:middle" height = 150&gt;&lt;br&gt;
+###1. Make a function
 ###2. Add `plumber` decorations
-###3. Save as **`plumber.r`**
+###3. ⚠️ Save as  **"`plumber.r`"** 
 ###4. Publish
+
 ]
 ---
 # Make it functional
@@ -345,7 +346,7 @@ class: inverse
 
 ```
 
-## [1] "heads"
+## [1] "tails"
 
 ```
 
@@ -355,7 +356,7 @@ class: inverse
 
 ```
 
-## [1] "heads"
+## [1] "tails"
 
 ```
 
@@ -370,7 +371,7 @@ class: inverse
 
 ```
 
-## [1] "tails"
+## [1] "heads"
 
 ```
 
@@ -381,8 +382,8 @@ class: inverse
 ```
 
 ##    Var1 Freq
-## 1 heads  253
-## 2 tails  247
+## 1 heads  238
+## 2 tails  262
 
 ```
 
@@ -390,7 +391,7 @@ class: inverse
 ]
 
 ---
-#You’ve basically made an API already
+#Get ready to decorate!
 
 
 ```r
@@ -409,9 +410,11 @@ multi_toss &lt;- function(n) {
 }
 ```
 
+.center[&lt;img src="slides_files/decorate.gif"  style="vertical-align:middle" height = 150&gt;]
 
 ---
-# The API
+# The Finished API
+Note special plumber comments (decorations) with `#*`
 
 ```r
 library(plumber)
@@ -423,8 +426,7 @@ library(plumber)
 
 function() {
   sample(c("heads", "tails"), 1, 
-         prob = c(0.5, 0.5), replace = TRUE)
-}
+         prob = c(0.5, 0.5), replace = TRUE)}
 
 #* Toss a coin multiple times and summarize output
 #* @param n the number of times to toss the coin
@@ -433,11 +435,10 @@ function() {
 function(n) {
   as.data.frame(
     table(sample(c("heads", "tails"), n, 
-                 prob = c(0.5, 0.5), replace = TRUE)))
-}
+                 prob = c(0.5, 0.5), replace = TRUE)))}
 ```
 ---
-# The API - plumber code decoration `#*`
+# The API - API title
 
 ```r
 library(plumber)
@@ -463,7 +464,7 @@ function(n) {
 }
 ```
 ---
-# The API - plumber code decoration `#*`
+# The API - Endpoint description
 
 ```r
 library(plumber)
@@ -489,7 +490,7 @@ function(n) {
 }
 ```
 ---
-## The API - plumber code decoration `#*`
+# The API - Endpoint parameters
 
 ```r
 library(plumber)
@@ -515,7 +516,7 @@ function(n) {
 }
 ```
 ---
-# The API - plumber code decoration `#*`
+# The API - Endpoint method
 
 ```r
 library(plumber)
@@ -544,11 +545,14 @@ function(n) {
 class: inverse, center, middle
 # The Swagger Interface
 
-???
-When you save and run your API locally in the RStudio IDE, the Swagger interface allows you to interact with the API and test it
+
 ---
 # Swagger
 &lt;img src="slides_files/swagger.png" width="80%" style="display: block; margin: auto;" /&gt;
+
+???
+The Swagger interface in the RStudio IDE and on RStudio Connect permits you to interact with the API
+
 ---
 # Publish the API 
 Using RStudio Connect (push button deployment, git-backed deployment, or programmatic)
@@ -558,7 +562,8 @@ Using RStudio Connect (push button deployment, git-backed deployment, or program
 ---
 class: inverse, middle, center
 
-#What have we done?
+#Hey, we published an API!  
+##Let's go play
 ---
 #Query our API from a browser
 Single Coin Toss: 
@@ -570,6 +575,11 @@ Multi Coin Toss:
 ---
 # Elements of our API call
 
+.center[
+&lt;h3&gt;&lt;span style='color:tomato'&gt;colorado.rstudio.com/rsc/&lt;/span&gt;&lt;span style='color:cornflowerblue'&gt;coin_api/&lt;/span&gt;&lt;span style='color:orange'&gt;multi_toss&lt;/span&gt;&lt;span style='color:darkseagreen'&gt;?n=40&lt;/span&gt;&lt;/h3&gt;
+
+### &lt;span style="color:tomato"&gt;host/&lt;/span&gt;&lt;span style="color:cornflowerblue"&gt;RSC content path/&lt;/span&gt;&lt;span style="color:orange"&gt;endpoint&lt;/span&gt;&lt;span style="color:darkseagreen"&gt;?parameters&lt;/span&gt;
+]
 `#* Toss a coin multiple times and summarize output`  
 &lt;span style="color:darkseagreen"&gt;`#* @param n the number of times to toss the coin`&lt;/span&gt;  
 &lt;span style="color:orange"&gt;`#* @get /multi_toss`&lt;/span&gt;  
@@ -580,13 +590,6 @@ function(n) {
                  prob = c(0.5, 0.5), replace = TRUE)))
 }
 ```
-
-
-.center[
-&lt;h2&gt;&lt;span style='color:tomato'&gt;https://colorado.rstudio.com/rsc/&lt;/span&gt; &lt;span style='color:cornflowerblue'&gt;coin_api/&lt;/span&gt;&lt;span style='color:orange'&gt;multi_toss&lt;/span&gt;&lt;span style='color:darkseagreen'&gt;?n=40&lt;/span&gt;&lt;/h2&gt;
-
-## &lt;span style="color:tomato"&gt;host/&lt;/span&gt;&lt;span style="color:cornflowerblue"&gt;RSC content path/&lt;/span&gt;&lt;br&gt;&lt;span style="color:orange"&gt;endpoint&lt;/span&gt;&lt;span style="color:darkseagreen"&gt;?parameters&lt;/span&gt;
-]
 ---
 class: inverse, middle, center
 # That's great, now how do I use it?
@@ -657,7 +660,7 @@ Response [https://colorado.rstudio.com/rsc/coin_api/coin_toss]
 
 
 ```r
-*(respponse_raw &lt;- content(response, as = "text"))
+*(response_raw &lt;- content(response, as = "text"))
 
 ## [1] "[{\"Var1\":\"heads\",\"Freq\":500},{\"Var1\":\"tails\",\"Freq\":500}]" 
 
@@ -680,12 +683,15 @@ Putting everything together:
 ```
 
 ---
-class: inverse, middle, center
+class: inverse
 
 # What have we done?
-## &lt;svg style="height:0.8em;top:.04em;position:relative;fill:white;" viewBox="0 0 448 512"&gt;&lt;path d="M400 480H48c-26.51 0-48-21.49-48-48V80c0-26.51 21.49-48 48-48h352c26.51 0 48 21.49 48 48v352c0 26.51-21.49 48-48 48zm-204.686-98.059l184-184c6.248-6.248 6.248-16.379 0-22.627l-22.627-22.627c-6.248-6.248-16.379-6.249-22.628 0L184 302.745l-70.059-70.059c-6.248-6.248-16.379-6.248-22.628 0l-22.627 22.627c-6.248 6.248-6.248 16.379 0 22.627l104 104c6.249 6.25 16.379 6.25 22.628.001z"/&gt;&lt;/svg&gt; &amp;nbsp; Turned our R code into an API  
-## &lt;svg style="height:0.8em;top:.04em;position:relative;fill:white;" viewBox="0 0 448 512"&gt;&lt;path d="M400 480H48c-26.51 0-48-21.49-48-48V80c0-26.51 21.49-48 48-48h352c26.51 0 48 21.49 48 48v352c0 26.51-21.49 48-48 48zm-204.686-98.059l184-184c6.248-6.248 6.248-16.379 0-22.627l-22.627-22.627c-6.248-6.248-16.379-6.249-22.628 0L184 302.745l-70.059-70.059c-6.248-6.248-16.379-6.248-22.628 0l-22.627 22.627c-6.248 6.248-6.248 16.379 0 22.627l104 104c6.249 6.25 16.379 6.25 22.628.001z"/&gt;&lt;/svg&gt; &amp;nbsp; Call an API for use in R 
-
+.left-column-impact[]
+.right-column[
+### &lt;svg style="height:0.8em;top:.04em;position:relative;fill:white;" viewBox="0 0 448 512"&gt;&lt;path d="M400 480H48c-26.51 0-48-21.49-48-48V80c0-26.51 21.49-48 48-48h352c26.51 0 48 21.49 48 48v352c0 26.51-21.49 48-48 48zm-204.686-98.059l184-184c6.248-6.248 6.248-16.379 0-22.627l-22.627-22.627c-6.248-6.248-16.379-6.249-22.628 0L184 302.745l-70.059-70.059c-6.248-6.248-16.379-6.248-22.628 0l-22.627 22.627c-6.248 6.248-6.248 16.379 0 22.627l104 104c6.249 6.25 16.379 6.25 22.628.001z"/&gt;&lt;/svg&gt; &amp;nbsp; Turn our R code into an API  
+### &lt;svg style="height:0.8em;top:.04em;position:relative;fill:white;" viewBox="0 0 448 512"&gt;&lt;path d="M400 480H48c-26.51 0-48-21.49-48-48V80c0-26.51 21.49-48 48-48h352c26.51 0 48 21.49 48 48v352c0 26.51-21.49 48-48 48zm-204.686-98.059l184-184c6.248-6.248 6.248-16.379 0-22.627l-22.627-22.627c-6.248-6.248-16.379-6.249-22.628 0L184 302.745l-70.059-70.059c-6.248-6.248-16.379-6.248-22.628 0l-22.627 22.627c-6.248 6.248-6.248 16.379 0 22.627l104 104c6.249 6.25 16.379 6.25 22.628.001z"/&gt;&lt;/svg&gt; &amp;nbsp; Publish our API
+### &lt;svg style="height:0.8em;top:.04em;position:relative;fill:white;" viewBox="0 0 448 512"&gt;&lt;path d="M400 480H48c-26.51 0-48-21.49-48-48V80c0-26.51 21.49-48 48-48h352c26.51 0 48 21.49 48 48v352c0 26.51-21.49 48-48 48zm-204.686-98.059l184-184c6.248-6.248 6.248-16.379 0-22.627l-22.627-22.627c-6.248-6.248-16.379-6.249-22.628 0L184 302.745l-70.059-70.059c-6.248-6.248-16.379-6.248-22.628 0l-22.627 22.627c-6.248 6.248-6.248 16.379 0 22.627l104 104c6.249 6.25 16.379 6.25 22.628.001z"/&gt;&lt;/svg&gt; &amp;nbsp; Call a published API for use in R 
+]
 
 # 🎉
 ---
@@ -699,12 +705,15 @@ class: inverse, middle, center
 * RESTful APIs use HTTP
  
 * HTTP is language agnostic
- 
-* Add APIs to your DS toolbox
- 
+
 * Reduce communication barriers
  
 * Enable programmatic use of tools
+
+* Add APIs to your DS toolbox
+
+* `plumber` is a easy way to convert your existing R code to an API
+
 ---
 # Brainstorm: API Ideas
 
@@ -712,7 +721,9 @@ class: inverse, middle, center
 
 * Standardize your data munging and other business logic 
 
-* 
+* Pull the heavy lifting out of your Shiny app and into an API
+
+* *What use cases are you thinking?*
 ---
 class: inverse, middle, center
 # Thank you!
@@ -722,71 +733,7 @@ class: inverse, middle, center
 
 ---
 
-class: center, middle  
 
-# Shiny, I love you, but...
-
----
-name: how it's going
-class: inverse
-.pull-left[
-# How it started...
-![](slides_files/babybear.png)
-] 
---
-.pull-right[
-# How it's going
-![](slides_files/beast.png)
-]
-
-???
-Often we start with a Shiny app that is a great fit for a problem.  But over time, often the app evolves. It can grow in complexity, or be tested to its limits as it becomes business critical. The care and feeding of the app can become burdensome.
----
-name: signs it's time to break up
-.left-column-impact[
-&lt;h6 &gt; 7&lt;/h6&gt;
-&lt;h7&gt;signs it's time to break up&lt;/h7&gt;
-]
-
-.right-column[
-&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;
-1. It's a monolith
-
-1. Updating is scary / hard
-
-1. The idea of handing it off or inheriting it is terrifying
-
-1. Performance issues
-
-1. Redundant code
-
-1. Other teams want to use your code
-
-1. Other teams or tools don't speak R
-
-]
-
----
-name: patterns to break up
-class: inverse 
-
-.left-column-impact[
-&lt;h6 style="color:#FFFFFF"&gt; 4&lt;/h6&gt;
-&lt;h7&gt;Patterns to break up big apps&lt;/h7&gt;
-]
-
-.right-column[
-&lt;br&gt;
-###1. Smart data refresh (e.g. &amp;nbsp;&lt;img src="slides_files/pins.png" height="90" style="vertical-align:middle"&gt;)
-
-###2. Write a  &amp;nbsp; &lt;img src="slides_files/pkg.png" height="90" style="vertical-align:middle"&gt;
-
-###3. APIs &amp;nbsp;&lt;img src="slides_files/plumber_small.png" height="90" style="vertical-align:middle"&gt;
-
-###4. Use &amp;nbsp; &lt;img src="slides_files/shiny.png" height="90" style="vertical-align:middle"&gt;&amp;nbsp; modules
-
-]
----
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>

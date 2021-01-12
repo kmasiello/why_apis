@@ -42,7 +42,7 @@ xaringanExtra::use_panelset()
 
 ---
 class: middle, center
-#Where are you? 
+#Where are you in your data science journey? 
 #Where is your organization?
 
 ---
@@ -298,7 +298,7 @@ class: inverse, center, middle
 <img src="slides_files/statistician.png" height="100" style="vertical-align:middle";>, 
 <img src="slides_files/jr-analyst.png" height="100" style="vertical-align:middle"; >]
 ![:col_row Susan has built a tool in R that provides Go/No-Go assertions,
-Andrea needs to incorporate these assertions into her Python code to predict if it will rain, 
+Andrea needs to incorporate these assertions into her Python code to inform her model, 
 Mateo needs his daily metrics shown in Tableau to reflect these assertions]
 
 --
@@ -315,15 +315,16 @@ Yeah, it's a coin toss. Let's keep it simple. `r emo::ji("smile")`
 class: inverse
 .left-column-impact[
 <h6 style="color:#FFFFFF">4</h6>
-<h7 style="color:#d6d6d6">steps to making a plumber API</h7>
+<h7>steps to making a plumber API</h7>
 ]
 
 .right-column[
-<br><br><br>
-###1. Make it functional
+<br><img src="slides_files/plumber.png"  style="vertical-align:middle" height = 150><br>
+###1. Make a function
 ###2. Add `plumber` decorations
-###3. Save as **`plumber.r`**
+###3. `r emo::ji("warning")` Save as  **"`plumber.r`"** 
 ###4. Publish
+
 ]
 ---
 # Make it functional
@@ -385,7 +386,7 @@ decorate("multi_toss") %>%
 ]
 
 ---
-#You’ve basically made an API already
+#Get ready to decorate!
 
 ```{r}
 #Function 1: toss once and give me a heads or tails output 
@@ -403,9 +404,11 @@ multi_toss <- function(n) {
 }
 ```
 
+.center[<img src="slides_files/decorate.gif"  style="vertical-align:middle" height = 150>]
 
 ---
-# The API
+# The Finished API
+Note special plumber comments (decorations) with `#*`
 ```{r, API, eval=FALSE}
 library(plumber)
 
@@ -416,8 +419,7 @@ library(plumber)
 
 function() {
   sample(c("heads", "tails"), 1, 
-         prob = c(0.5, 0.5), replace = TRUE)
-}
+         prob = c(0.5, 0.5), replace = TRUE)}
 
 #* Toss a coin multiple times and summarize output
 #* @param n the number of times to toss the coin
@@ -426,12 +428,10 @@ function() {
 function(n) {
   as.data.frame(
     table(sample(c("heads", "tails"), n, 
-                 prob = c(0.5, 0.5), replace = TRUE)))
-}
-
+                 prob = c(0.5, 0.5), replace = TRUE)))}
 ```
 ---
-# The API - plumber code decoration `#*`
+# The API - API title
 ```{r, eval=FALSE}
 library(plumber)
 
@@ -456,7 +456,7 @@ function(n) {
 }
 ```
 ---
-# The API - plumber code decoration `#*`
+# The API - Endpoint description
 ```{r, eval=FALSE}
 library(plumber)
 
@@ -481,7 +481,7 @@ function(n) {
 }
 ```
 ---
-## The API - plumber code decoration `#*`
+# The API - Endpoint parameters
 ```{r, eval=FALSE}
 library(plumber)
 
@@ -506,7 +506,7 @@ function(n) {
 }
 ```
 ---
-# The API - plumber code decoration `#*`
+# The API - Endpoint method
 ```{r, eval=FALSE}
 library(plumber)
 
@@ -534,13 +534,16 @@ function(n) {
 class: inverse, center, middle
 # The Swagger Interface
 
-???
-When you save and run your API locally in the RStudio IDE, the Swagger interface allows you to interact with the API and test it
+
 ---
 # Swagger
 ```{r  out.width = "80%", echo=FALSE, eval=TRUE, fig.align='center'}
 knitr::include_graphics("slides_files/swagger.png")
 ```
+
+???
+The Swagger interface in the RStudio IDE and on RStudio Connect permits you to interact with the API
+
 ---
 # Publish the API 
 Using RStudio Connect (push button deployment, git-backed deployment, or programmatic)
@@ -552,7 +555,8 @@ knitr::include_graphics("slides_files/published.png")
 ---
 class: inverse, middle, center
 
-#What have we done?
+#Hey, we published an API!  
+##Let's go play
 ---
 #Query our API from a browser
 Single Coin Toss: 
@@ -564,6 +568,19 @@ Multi Coin Toss:
 ---
 # Elements of our API call
 
+.center[
+```{r, results = "asis", echo = FALSE}
+"colorado.rstudio.com/rsc/coin_api/multi_toss?n=40" %>%
+  flair("colorado.rstudio.com/rsc/", color = "tomato") %>%
+  flair("coin_api/", color = "cornflowerblue") %>%
+  flair("multi_toss", color = "orange") %>%
+  flair("?n=40", color = "darkseagreen") %>% 
+  flair_all(before = "<h3>", after = "</h3>") %>%
+  cat()
+```
+
+### <span style="color:tomato">host/</span><span style="color:cornflowerblue">RSC content path/</span><span style="color:orange">endpoint</span><span style="color:darkseagreen">?parameters</span>
+]
 `#* Toss a coin multiple times and summarize output`  
 <span style="color:darkseagreen">`#* @param n the number of times to toss the coin`</span>  
 <span style="color:orange">`#* @get /multi_toss`</span>  
@@ -574,21 +591,6 @@ function(n) {
                  prob = c(0.5, 0.5), replace = TRUE)))
 }
 ```
-
-
-.center[
-```{r, results = "asis", echo = FALSE}
-"https://colorado.rstudio.com/rsc/ coin_api/multi_toss?n=40" %>%
-  flair("https://colorado.rstudio.com/rsc/", color = "tomato") %>%
-  flair("coin_api/", color = "cornflowerblue") %>%
-  flair("multi_toss", color = "orange") %>%
-  flair("?n=40", color = "darkseagreen") %>% 
-  flair_all(before = "<h2>", after = "</h2>") %>%
-  cat()
-```
-
-## <span style="color:tomato">host/</span><span style="color:cornflowerblue">RSC content path/</span><br><span style="color:orange">endpoint</span><span style="color:darkseagreen">?parameters</span>
-]
 ---
 class: inverse, middle, center
 # That's great, now how do I use it?
@@ -659,7 +661,7 @@ Response [https://colorado.rstudio.com/rsc/coin_api/coin_toss]
 
 ```{r eval=FALSE}
 
-{{(respponse_raw <- content(response, as = "text"))}}
+{{(response_raw <- content(response, as = "text"))}}
 
 ## [1] "[{\"Var1\":\"heads\",\"Freq\":500},{\"Var1\":\"tails\",\"Freq\":500}]" 
 
@@ -681,12 +683,15 @@ Putting everything together:
 ```
 
 ---
-class: inverse, middle, center
+class: inverse
 
 # What have we done?
-## `r fa(name = "check-square", fill = "white")` &nbsp; Turned our R code into an API  
-## `r fa(name = "check-square", fill = "white")` &nbsp; Call an API for use in R 
-
+.left-column-impact[]
+.right-column[
+### `r fa(name = "check-square", fill = "white")` &nbsp; Turn our R code into an API  
+### `r fa(name = "check-square", fill = "white")` &nbsp; Publish our API
+### `r fa(name = "check-square", fill = "white")` &nbsp; Call a published API for use in R 
+]
 
 # `r emo::ji("tada")`
 ---
@@ -700,12 +705,15 @@ class: inverse, middle, center
 * RESTful APIs use HTTP
  
 * HTTP is language agnostic
- 
-* Add APIs to your DS toolbox
- 
+
 * Reduce communication barriers
  
 * Enable programmatic use of tools
+
+* Add APIs to your DS toolbox
+
+* `plumber` is a easy way to convert your existing R code to an API
+
 ---
 # Brainstorm: API Ideas
 
@@ -713,7 +721,9 @@ class: inverse, middle, center
 
 * Standardize your data munging and other business logic 
 
-* 
+* Pull the heavy lifting out of your Shiny app and into an API
+
+* *What use cases are you thinking?*
 ---
 class: inverse, middle, center
 # Thank you!
@@ -723,68 +733,4 @@ class: inverse, middle, center
 
 ---
 
-class: center, middle  
 
-# Shiny, I love you, but...
-
----
-name: how it's going
-class: inverse
-.pull-left[
-# How it started...
-![](slides_files/babybear.png)
-] 
---
-.pull-right[
-# How it's going
-![](slides_files/beast.png)
-]
-
-???
-Often we start with a Shiny app that is a great fit for a problem.  But over time, often the app evolves. It can grow in complexity, or be tested to its limits as it becomes business critical. The care and feeding of the app can become burdensome.
----
-name: signs it's time to break up
-.left-column-impact[
-<h6 > 7</h6>
-<h7>signs it's time to break up</h7>
-]
-
-.right-column[
-<br><br><br><br>
-1. It's a monolith
-
-1. Updating is scary / hard
-
-1. The idea of handing it off or inheriting it is terrifying
-
-1. Performance issues
-
-1. Redundant code
-
-1. Other teams want to use your code
-
-1. Other teams or tools don't speak R
-
-]
-
----
-name: patterns to break up
-class: inverse 
-
-.left-column-impact[
-<h6 style="color:#FFFFFF"> 4</h6>
-<h7>Patterns to break up big apps</h7>
-]
-
-.right-column[
-<br>
-###1. Smart data refresh (e.g. &nbsp;<img src="slides_files/pins.png" height="90" style="vertical-align:middle">)
-
-###2. Write a  &nbsp; <img src="slides_files/pkg.png" height="90" style="vertical-align:middle">
-
-###3. APIs &nbsp;<img src="slides_files/plumber_small.png" height="90" style="vertical-align:middle">
-
-###4. Use &nbsp; <img src="slides_files/shiny.png" height="90" style="vertical-align:middle">&nbsp; modules
-
-]
----
