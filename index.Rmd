@@ -8,9 +8,17 @@ site: distill::distill_website
 ```{r embed-xaringan, echo=FALSE, fig.cap="[Slides](slides/slides.html)"}
 xaringanExtra::embed_xaringan(url = "slides/slides.html", ratio = "4:3")
 ```
+  
+### Our demo API:
+
+* See it on RStudio Connect: https://colorado.rstudio.com/rsc/coin_api/
+
+* Interact directly in your browser: 
+  * single coin toss: https://colorado.rstudio.com/rsc/coin_api/coin_toss
+  * multi coin toss: https://colorado.rstudio.com/rsc/coin_api/multi_toss?n=40 (change parameter n to conduct a different number of tosses)
 
 
-Additional Resources:
+### Additional Resources:
 
 * See the `plumber` package website: https://www.rplumber.io/. You’ll find installation instructions along with related projects and contextual information
 
