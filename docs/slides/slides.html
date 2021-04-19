@@ -4,7 +4,7 @@
     <title>APIs: you’re probably not using them and why you probably should</title>
     <meta charset="utf-8" />
     <meta name="author" content="Katie Masiello" />
-    <script src="slides_files/header-attrs-2.6.3/header-attrs.js"></script>
+    <script src="slides_files/header-attrs-2.7/header-attrs.js"></script>
     <link href="slides_files/remark-css-0.0.1/default.css" rel="stylesheet" />
     <link href="slides_files/remark-css-0.0.1/default-fonts.css" rel="stylesheet" />
     <script src="slides_files/clipboard-2.0.6/clipboard.min.js"></script>
@@ -37,11 +37,19 @@ class: inverse, center, middle
 ### Presented by: **Katie Masiello** | Developed by: **Josiah Parry**
 ### **RStudio Customer Success**
 
+???
+I've been working around APIs for over a year and gleaning pieces from talks here and there, 
+but it wasn't until recently when my colleague Josiah and I were talking through this material today that I felt like I'd internalized it and it all really clicked.  
+I hope the discussion today is transformative for you as well.  
 ---
 class: middle, center
 #Where are you in your data science journey? 
 #Where is your organization?
 
+???
+I want to start by framing things a bit asking you to think about where you are in your data science journey? 
+Are you brand new to this and the tools, are you in a place where you and/or the organization needs to mature and adopt new tools and workflows?   
+I get to talk to a lot of teams in this role and what is neat is getting a pulse on where teams are on the continuum of maturity. 
 ---
 # Common Pain Points
 * "I've created a Shiny beast!"
@@ -50,13 +58,18 @@ class: middle, center
 
 * "We are replicating work in every project"
 
+???
+Often when teams are going through some maturation pains, we hear things like this.  
+Sometimes you build out a solution but the solution itself becomes the problem in that it's either difficult to maintain or update, or supporting it in production is unwieldy.  
+These are some of the ways individuals and teams take steps in maturity.
 
 
 ---
 class: inverse, center, middle
 # Changing Data Science Landscape
 
-
+???
+organizations and the overall landscape for data science is maturing as well.
 ---
 # Data Science in 2021  
 
@@ -72,15 +85,22 @@ class: inverse, center, middle
 
 * How? Microservices    
 
-
+???
+we see modern data science teams doing these things.
 ---
 # Monolithic Mindset
 &lt;img src="slides_files/monolith.png" width="60%" style="display: block; margin: auto;" /&gt;
 
+???
+a solution may start out as what we think of as a monolith.  
+A singular beast.  but I'd like to encourage you to think of a more efficient way to build, productionize, and sustain assets.
 ---
 # Lean it out with Microservices
 &lt;img src="slides_files/microservices.png" width="90%" style="display: block; margin: auto;" /&gt;
 
+???
+we want to lean things out with what we call microservices.  
+smaller assets that do singular work
 ---
 class: inverse, middle
 
@@ -89,6 +109,9 @@ class: inverse, middle
 .center[# “Gather together those things that change for the same reason, and separate those things that change for different reasons.”]
 .right[###&amp;ndash; Robert C. Martin]
 
+???
+If you follow best practices with version control / github, you'll undoubtedly be diligent about committing changes in small bundles all aligned with one particular piece of work.  
+this is the same concept.  
 ---
 class: inverse, center, middle
 # Okay, but how?
@@ -109,6 +132,10 @@ class: inverse, center, middle
 
 * Think of HTTP as a universal language
 
+???
+these are the basics of APIs.  
+What you may have heard before, right? It's how machines talk to one another.  You're using an API just to call up a website like cnn.  
+But lets get into it a bit more to help internalize this a bit more. 
 ---
 # Think of APIs as a way to access functions
 General form of an API: 
@@ -129,13 +156,24 @@ As an API:
 http://hostname/my_function/?argument=value
 
 ```
-
+???
+you write a function in R to do something.  
+an API becomes a way to access that.  the general form is:
+and it maps out like this:
 ---
 # Think of APIs as a universal adapter
 
 .center[&lt;img src="slides_files/dockingstation.png" height = 325&gt;] 
   
 .center[&lt;img src="slides_files/dockingstationDescription.png" width = 1000&gt; ]
+???
+I'm a mechanical engineer by training. 
+I think in terms of physical things. tools.  nuts and bolts and fasteners. fluid flowing in pipes.  
+so another way to think of APIs is like an adapter. 
+you've got this black box thing.  it doesnt really matter what's inside, how it got there, what language it was written in, or anything else.  
+As long as you've got something that fits into the USB-shaped hole that's in it, you can plug something in, like a keyboard or thumb drive into that hole.  
+the input signal that you send to the black box adapter interfaces with the computer and you get some kind of output in response.
+this is equivalent to plugging your R or Python based code into the API's endpoint with specific input parameters and the API returns an output. 
 
 ---
 # The Case for APIs
@@ -153,7 +191,12 @@ Traditional Data Science Tool Box
 * *all limited to end user consumption*
   
 Extend your reach with APIs!
-
+???
+So now we know more about what an api is.  
+What's so great about them?  For one, if we look at the traditional data science toolbox it may include any number of these traditional things.
+but they're all limited to end user consumption.  
+they require some kind of user interaction.  
+an API permits you to eliminate the human interaction.  
 ---
 # The Case for APIs
 .pull-left[&lt;h3 style="margin-top: 0; color: #447099;"&gt;
@@ -188,6 +231,13 @@ Collaborative &lt;/h3&gt;
 
 * *Glue together API requests! Pipelines, baby!* &lt;img src="slides_files/pipe.png" height="20" style="vertical-align:middle"&gt;
 ]
+
+???
+this is a lot but a few things i want to point out - APIs let you lean things out like we talked about.  
+breaking things into smaller, reusable chunks.  you can spend less time troubleshooting and focus on the smaller pieces of the puzzle for change management and upgrading.  
+Even more compelling I Think is you can eliminate friction between groups. teams can use whatever language is preferred and there's no recoding required.  
+this enables automation and programmatic use of services, and you really feel like a superstar when you start gluing together pipelines of API requests. 
+
 ---
 class: inverse
 name: Signs you might be ready to create an API
@@ -213,6 +263,8 @@ name: Signs you might be ready to create an API
 
 ]
 
+???
+we've talked about these items already. but if you find this discussion today resonating with where you are today, it may be time to think about brining in APIs.
 ---
 
 class: inverse, center, middle
@@ -265,11 +317,14 @@ class: inverse, center, middle
 
 * **Headers &amp; body (optional):** 
   * (not in URL) Associated (meta)data 
+  
+???
+we've used these words already but lets reiterate some vocabulary and concepts.  
 ---
 # API Requests
 * Each API endpoint has a different **method**  
 
-* **GET**
+* GET
   * Used to &lt;span style="background-color:#fff2cc"&gt;*retrieve*&lt;/span&gt; data. Parameters only. No body.
   * Everything is in the URL.
   * Don’t send sensitive data! 
@@ -332,13 +387,18 @@ class: inverse
 .panel[.panel-name[Function basics]
 * Functions are code shortcuts!
 
-* Functions are a special kind of object
-
 * Arguments are placeholders
 
 * Things that change should be arguments
 
-* Whatever is printed last is returned]
+* Whatever is printed last is returned
+
+.pull-left[**Tip 1: use code snippets to quickly insert a function**
+.center[&lt;img src="slides_files/function_snippet.gif"  style="vertical-align:middle" height = 150&gt;]]
+.pull-right[**Tip 2: Extract function to convert code to a function**
+.center[&lt;img src="slides_files/extract_function.gif"  style="vertical-align:middle" height = 150&gt;]]
+
+]
 .panel[.panel-name[Coin Toss Function]
 
 
@@ -347,7 +407,7 @@ class: inverse
 
 ```
 
-## [1] "heads"
+## [1] "tails"
 
 ```
 
@@ -357,7 +417,7 @@ class: inverse
 
 ```
 
-## [1] "heads"
+## [1] "tails"
 
 ```
 
@@ -372,7 +432,7 @@ class: inverse
 
 ```
 
-## [1] "tails"
+## [1] "heads"
 
 ```
 
@@ -383,8 +443,8 @@ class: inverse
 ```
 
 ##    Var1 Freq
-## 1 heads  252
-## 2 tails  248
+## 1 heads  249
+## 2 tails  251
 
 ```
 
@@ -591,6 +651,9 @@ function(n) {
                  prob = c(0.5, 0.5), replace = TRUE)))
 }
 ```
+???
+So to reiterate a few things - remember that in our API call for multitoss we have the following pieces.  
+and here's how they map back to the pariticular section in the plumber.r API script.
 ---
 class: inverse, middle, center
 # That's great, now how do I use it?
@@ -697,42 +760,31 @@ class: inverse
 # 🎉
 ---
 class: inverse, middle, center
-# Recap
+# Now What?
 ---
-# Recap
+# Time to Let Loose with APIs
+.left-column-impact[&lt;img src="slides_files/lets_do_this.gif"  style="vertical-align:middle"&gt;]
 
-* APIs: computers talking to computers
- 
-* RESTful APIs use HTTP
- 
-* HTTP is language agnostic
-
-* Reduce communication barriers
- 
-* Enable programmatic use of tools
-
-* Add APIs to your DS toolbox
-
-* `plumber` is a easy way to convert your existing R code to an API
-
----
-# Brainstorm: API Ideas
+.right-column[Brainstorm: API Ideas
 
 * Query your model or database via Slack integration
-
 * Standardize your data munging and other business logic 
-
 * Pull the heavy lifting out of your Shiny app and into an API
-
 * *What use cases are you thinking?*
----
-class: inverse, middle, center
-# Thank you!
----
-class: inverse, middle, center
-# Let's talk about it.
+
+Take it to the next level
+
+* Parallel execution - [Execute API calls asynchronously](!https://www.rstudio.com/resources/rstudioglobal-2021/plumber-and-future-async-web-apis/) 
+* Mix up your serializer - beyond JSON, includes feather, csv, image types, [and more](!https://www.rplumber.io/reference/parsers.html)
+* Even more new features in the [plumber 1.1.0 release](!https://blog.rstudio.com/2021/03/29/plumber-v1-1-0/)
+
+]
+
 
 ---
+class: inverse, middle, center
+## Thank you!
+# Let's talk about it.
 
 
     </textarea>
