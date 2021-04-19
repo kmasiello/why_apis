@@ -1,0 +1,21 @@
+{
+  "articles": [
+    {
+      "path": "about.html",
+      "title": "About this site",
+      "description": "Some additional details about the website",
+      "author": [],
+      "contents": "\nSite built using the distill package for R. Slides built with R Markdown and the xaringan package.\n\n\n\n",
+      "last_modified": "2021-04-19T16:49:58-07:00"
+    },
+    {
+      "path": "index.html",
+      "title": "Why APIs",
+      "description": "You're probably not using APIs, but you probably should. What are APIs? How do you use them? And how do you get started?\n",
+      "author": [],
+      "contents": "\n\n\n\nfitvids('.shareagain', {players: 'iframe'});\n\nOur demo API:\nSee it on RStudio Connect: https://colorado.rstudio.com/rsc/coin_api/\nInteract directly in your browser:\nsingle coin toss: https://colorado.rstudio.com/rsc/coin_api/coin_toss\nmulti coin toss: https://colorado.rstudio.com/rsc/coin_api/multi_toss?n=40 (change parameter n to conduct a different number of tosses)\n\nAdditional Resources:\nPlumber cheatsheet: https://rstudio.com/resources/cheatsheets\nSee the plumber package website: https://www.rplumber.io/. You’ll find installation instructions along with related projects and contextual information\nWatch our webinar covering the latest in the Plumber package: https://rstudio.com/resources/webinars/expanding-r-horizons-integrating-r-with-plumber-apis/\nAt our annual conference rstudio::conf 2020, Alex Gold (Solutions Engineer at RStudio) presented some additional ways to bring your R work into production using Plumber: https://rstudio.com/resources/rstudioconf-2020/deploying-end-to-end-data-science-with-shiny-plumber-and-pins/\nAnother excellent conference talk is James Blair’s rstudio::conf 2019 talk “Democratizing R with Plumber APIs” where he takes an existing Shiny application that uses an R model and turns the model into an API so it can be used by other applications: https://rstudio.com/resources/rstudioconf-2019/democratizing-r-with-plumber-apis/\nSee Barrett Schloerke’s talk “plumber + future: Async Web APIs” from rstudio::global 2021 for asynchronous calls to APIs: https://www.rstudio.com/resources/rstudioglobal-2021/plumber-and-future-async-web-apis/\nIf you’re interested in how Plumber specifically works with RStudio Connect you can find documentation here: https://docs.rstudio.com/how-to-guides/rsc/publish-plumberapi/\n\n\n\n",
+      "last_modified": "2021-04-19T16:49:58-07:00"
+    }
+  ],
+  "collections": []
+}
