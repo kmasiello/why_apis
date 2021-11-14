@@ -38,7 +38,7 @@ xaringanExtra::use_panelset()
 ```
 
 # **APIs**: you're probably not using them and why you probably should
-### Presented by: **Katie Masiello** | Developed by: **Josiah Parry**
+### Presented by: **Katie Masiello** | Adapted from: **Josiah Parry**
 ### **RStudio Customer Success**
 
 ???
@@ -654,7 +654,7 @@ function(n) {
 ```
 ???
 So to reiterate a few things - remember that in our API call for multitoss we have the following pieces.  
-and here's how they map back to the pariticular section in the plumber.r API script.
+and here's how they map back to the particular section in the plumber.r API script.
 ---
 class: inverse, middle, center
 # That's great, now how do I use it?
