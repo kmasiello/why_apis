@@ -31,9 +31,9 @@ library(fontawesome)
 ```
 
 ```{r include=FALSE, warning=FALSE}
-xaringanExtra::use_share_again()
-xaringanExtra::style_share_again(share_buttons = c("none"))
-xaringanExtra::use_panelset()
+# xaringanExtra::use_share_again()
+# xaringanExtra::style_share_again(share_buttons = c("none"))
+# xaringanExtra::use_panelset()
 
 ```
 
